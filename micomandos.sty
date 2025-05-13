@@ -1,0 +1,50 @@
+% Crear un archivo llamado "micomandos.sty"
+\ProvidesPackage{micomandos}
+\RequirePackage{siunitx}
+\RequirePackage{xspace}
+
+
+\sisetup{
+	range-units = single,
+	separate-uncertainty = true,
+	detect-all,
+	per-mode = symbol,
+	output-decimal-marker = {,},
+	text-sf = \normalsize,  % Faltaba la coma aquí
+	group-separator = {\,},    % Espacio fino como separador de miles
+	group-minimum-digits = 4,  % Aplicar separador a números de 4 o más dígitos
+	group-digits = true       % Agrupar dígitos
+}
+
+%\sisetup{per-mode=symbol}  
+%\sisetup{output-decimal-marker={,}}
+
+
+\DeclareSIUnit\bit{bit} % Define la unidad bit
+\DeclareSIUnit\bps{bps} % Define bits por segundo como una unidad
+\DeclareSIUnit\byte{B} % Define byte
+\DeclareSIUnit\bit{bit} % Define bit
+\DeclareSIUnit\hertz{Hz} % Define hertz
+\DeclareSIUnit{\ppm}{ppm}
+\DeclareSIUnit{\dBm}{dBm}
+\DeclareSIUnit{\baud}{Bd}
+\DeclareSIUnit{\RH}{\percent\,HR}
+
+% Definir comandos personalizados para unidades
+\newcommand{\ugm}[1]{\SI{#1}{\micro\gram\per\cubic\meter}\xspace}
+\newcommand{\mcmin}[1]{\SI{#1}{\cubic\meter\per\minute}\xspace}
+\newcommand{\MPF}{MP\textsubscript{2,5}\xspace} % Partículas finas
+\newcommand{\MPG}{MP\textsubscript{10}\xspace} % Partículas gruesas
+\newcommand{\ugmpm}[1]{\SI{\pm#1}{\micro\gram\per\cubic\meter}\xspace}
+\newcommand{\ugpmc}[1]{\SI{#1}{\micro\gram\per\cubic\meter}\xspace}
+
+% Configuración de siunitx
+
+% Define some commands to keep the formatting separated from the content 
+\newcommand{\keyword}[1]{\textbf{#1}}
+\newcommand{\tabhead}[1]{\textbf{#1}}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\file}[1]{\texttt{\bfseries#1}}
+\newcommand{\option}[1]{\texttt{\itshape#1}}
+\newcommand{\grados}{$^{\circ}$}
+\newcommand{\IIC}{I\textsuperscript{2}C\xspace}

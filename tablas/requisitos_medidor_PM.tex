@@ -1,0 +1,52 @@
+%requisitos medidor de MP
+	\begin{tabular}{p{0.15\linewidth}p{0.55\linewidth}p{0.1\linewidth}p{0.1\linewidth}}
+		\toprule
+		\textbf{Categoría} & \textbf{Descripción} & \textbf{ID} & \textbf{Prioridad} \\
+		\midrule
+		\multirow{8}{*}{Funcionales} 
+		& Incorporación de tres sensores \MPF mínimo. & RF-a & P1 \\
+		& Almacenamiento local de datos con opción de consulta. & RF-b & P1 \\
+		& Cálculo automático de parámetros estadísticos. & RF-c & P2 \\
+		& Comunicación flexible (cableada/inalámbrica). & RF-d & P3 \\
+		& Identificación única de instrumentos. & RF-e & P2 \\
+		& Estampa temporal (RTC) en mediciones. & RF-f & P1 \\
+		& Monitoreo remoto de estado operativo. & RF-g & P4 \\
+		& Cálculo de promedios temporales (\SI{1}{\hour}, \SI{24}{\hour}). & RF-h & P2 \\
+		\midrule
+		\multirow{4}{*}{Hardware} 
+		& Placa compatible con comunicación inalámbrica. & RH-a & P3 \\
+		& Gestión de múltiples sensores y RTC. & RH-b & P1 \\
+		& Comunicación entre sensores y placa. & RH-c & P1 \\
+		& Rango operativo \SIrange{0}{500}{\micro\gram\per\cubic\meter} (\SI{\pm10}{\percent}). & RH-d & P2 \\
+		\midrule
+		\multirow{3}{*}{Software} 
+		& Variables tipo punto flotante. & RS-a & P1 \\
+		& Protocolos de comunicación con servidor. & RS-b & P4 \\
+		& Sistema de alarmas y notificaciones. & RS-c & P3 \\
+		\midrule
+		\multirow{3}{*}{Interfaz} 
+		& Acceso a datos históricos. & RI-a & P2 \\
+		& Alertas por umbrales predefinidos. & RI-b & P4 \\
+		& Modo ahorro de energía. & RI-c & P3 \\
+		\midrule
+		\multirow{3}{*}{Alimentación} 
+		& Compatibilidad red \SI{220}{\volt}. & RA-a & P1 \\
+		& Alimentación componentes anexos \SI{220}{\volt}. & RA-b & P2 \\
+		& Batería de respaldo \SI{2000}{\milli\ampere\hour}. & RA-c & P4 \\
+		\midrule
+		\multirow{3}{*}{Gabinete} 
+		& Gabinete plástico con accesos. & RG-a & P1 \\
+		& Protección IP65 o superior. & RG-b & P2 \\
+		& Sistema de montaje versátil. & RG-c & P3 \\
+		\midrule
+		\multirow{3}{*}{Evaluación} 
+		& Pruebas en diversas condiciones atmosféricas. & RE-a & P2 \\
+		& Cobertura inalámbrica mínima \SI{0.2}{\kilo\meter}. & RE-b & P4 \\
+		& Calibración con sensores certificados. & RE-c & P1 \\
+		\midrule
+		\multirow{3}{*}{Documentación} 
+		& Manual de características y mantenimiento. & RD-a & P1 \\
+		& Tabla de fallas y soluciones. & RD-b & P3 \\
+		& Esquemáticos de componentes y conexiones. & RD-c & P1 \\
+		\bottomrule
+	\end{tabular}

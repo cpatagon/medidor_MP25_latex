@@ -1,202 +1,488 @@
+%!TEX root = ../TI_Gomez_Luis.tex
 \chapter{Introducción específica} % Main chapter title
 
 \label{Chapter2}
 
+
+Este capítulo presenta los componentes principales y herramientas utilizadas en el desarrollo del sistema de medición de \MPF. Se describen las características técnicas del sensor óptico SPS30, el microcontrolador, los sensores complementarios de humedad y temperatura, el módulo de comunicación inalámbrica y la fuente de alimentación. De forma adicional, se detallan los protocolos de comunicación implementados y las herramientas de desarrollo empleadas en la implementación del instrumento. Por último, el capítulo finaliza con una descripción de los requerimientos del instrumento.
+
+
+\section{Sensor de partículas SPS30}
+
+El sensor de material particulado SPS30 utiliza el principio de dispersión láser con una longitud de onda de \SI{660}{\nano\meter}, Clase 1  para la detección de partículas \cite{Sensirion2023}. 
+Las especificaciones técnicas establecen un rango de medición de concentración másica de 0 a \SI{1000}{\micro\gram\per\cubic\meter} en cuatro fracciones de tamaños, como se ve en la tabla \ref{tab:sensor_ranges}. 
+
+
+El sensor tiene una calibración de fábrica con  dos instrumentos de referencia: el fotómetro TSI DustTrak™ DRX 8533 para mediciones gravimétricas de PM\textsubscript{2.5} y el espectrómetro óptico TSI OPS 3330 para distribución numérica de partículas en el rango de PM\textsubscript{2.5}.
+
+Las especificaciones eléctricas indican un consumo normal de \SI{55\pm10}{\milli\ampere} en modo de medición y \SI{50}{\micro\ampere} en modo de reposo. Más detalles se puede ver en la tabla \ref{tab:electrical_characteristics} del apéndice \ref{AppendixA}. El rango de operación de temperaturas es de \SIrange{-10}{40}{\celsius} y humedad relativa de \SIrange{0}{80}{\RH}, como se ve en la tabla \ref{tab:sensor_caracteristicas}. El sistema incluye un mecanismo de autolimpieza del ventilador con un ciclo de \SI{168}{\hour}. Incorpora un filtro HEPA para prevenir la degradación del rendimiento por acumulación de partículas en el sistema \cite{alfano2020}. 
+
+\begin{table}[h!]
+	\centering
+	\small
+	\caption{Especificaciones técnicas del sensor SPS30.}
+	\begin{tabular}{lcl}
+		\toprule
+		\textbf{Fracción} & \textbf{Rango de tamaño} & \textbf{Precisión} \\
+		\midrule
+		PM\textsubscript{1,0} & \SIrange{0.3}{1.0}{\micro\meter} & \multirow{2}{*}{%
+			\begin{tabular}{l}
+				$\pm$[\SI{5}{\micro\gram\per\cubic\meter} + 5\% (0--\SI{100}{\micro\gram\per\cubic\meter})]\\
+				$\pm$[10\% (100--\SI{1000}{\micro\gram\per\cubic\meter}])
+		\end{tabular}} \\[2.5ex]
+		\MPF & \SIrange{0.3}{2.5}{\micro\meter} & \\[2ex]
+		PM\textsubscript{4,0} & \SIrange{0.3}{4.0}{\micro\meter} & \multirow{2}{*}{%
+			\begin{tabular}{l}
+				$\pm$[\SI{7}{\micro\gram\per\cubic\meter} + 7\% (0--\SI{100}{\micro\gram\per\cubic\meter})]\\
+				$\pm$[25\% (\SIrange{100}{1000}{\micro\gram\per\cubic\meter})]
+		\end{tabular}} \\[2.5ex]
+		PM\textsubscript{10} & \SIrange{0.3}{10.0}{\micro\meter} & \\[2ex]
+		\bottomrule
+%		\multicolumn{3}{l}{\footnotesize Rango de medición: \SIrange{0}{1000}{\micro\gram\per\cubic\meter}} \\
+%		\multicolumn{3}{l}{\footnotesize Tiempo de medición: \SI{1}{\second}} \\
+%		\multicolumn{3}{l}{\footnotesize Intervalo de medición recomendado: \SI{1}{\second} o mayor} \\
+%		\multicolumn{3}{l}{\footnotesize Tiempo de vida útil: Superior a 10 años en operación continua} \\
+%		\multicolumn{3}{l}{\footnotesize Calibración: Contra fotómetro TSI DustTrak™ DRX 8533}
+	\end{tabular}
+	\label{tab:sensor_ranges}
+\end{table}
+
+La comunicación se establece mediante dos interfaces: UART (para conexiones superiores a \SI{20}{\centi\meter}) e \IIC con velocidad máxima de \SI{100}{\kilo\bit\per\second}. Las dimensiones físicas del sensor son \SI{41x41x12}{\milli\meter}. Los estudios de desempeño indican que el sensor no es apto para la cuantificación de \MPG \cite{Kuula2020}.
+
+
+\begin{table}[h]
+	\centering
+	\small
+	\caption{Características del sensor de material particulado.}
+	\label{tab:sensor_caracteristicas}
+\input{tablas/sensorSPS30_caracteristicas.tex}
+\end{table}
+
+
+ \pagebreak
+
+
+
+
+
+%\newpage
+
+\section{Características del microcontrolador}
+
+El microcontrolador STM32F429ZI cuenta con características para aplicaciones en instrumentación \cite{Yang2022, Wu2018}. El procesador ARM Cortex-M4, con unidad de punto flotante (FPU), ejecuta operaciones matemáticas con decimales \citep{ST2024reference}. La frecuencia de operación de \SI{180}{\mega\hertz} permite el muestreo y procesamiento en tiempo cuasireal. En la tabla \ref{tab:micro_specs} se muestras las características del microcontrolador. 
+
+La memoria del sistema incluye \SI{2}{\mega\byte} de Flash y \SI{256}{\kilo\byte} de SRAM. Esto permite la implementación de buffers circulares para el almacenamiento temporal de datos y la ejecución de algoritmos de corrección estadística \cite{Gunther2014}. Por ejemplo, si los datos del sensor requieren aproximadamente \SI{32}{\byte} por muestra, esto permite el almacenamiento aproximado de hasta \num{8000} muestras en memoria RAM.
+
+Los periféricos de comunicación del microcontrolador soportan interfaces como UART, SPI e \IIC, comunes en sensores para aplicaciones de internet de las cosas o IoT. El controlador DMA asociado al \IIC permite la transferencia de datos sin intervención del CPU, lo que optimiza el rendimiento del sistema. Los temporizadores de 16 bits facilitan la generación de bases de tiempo para el muestreo periódico \citep{ST2024datasheet}.
+
+El microcontrolador incorpora un conversor analógico-digital de 12 bits con hasta 24 canales. Esto permite la medición de variables ambientales adicionales, como datos de temperatura y humedad relativa. La velocidad de conversión de \SI{2.4}{\mega\hertz} habilita el muestreo cuasi simultáneo de múltiples variables.
+Las principales características eléctricas de la placa se pueden observar en la tabla \ref{tab:external_power_sources}, del apéndice \ref{AppendixA}.
+
+\begin{table}[h!]
+	\centering
+	\caption{Características principales del microcontrolador STM32F429ZI.}
+	\small
+	\input{tablas/MicroSTM32N429ZI_caracteristicas}
+	\label{tab:micro_specs}
+\end{table}
+
+
+
+
+
+\section{Sensor de humedad y temperatura DHT22}
+
+El módulo DHT22 (AM2302) integra un sensor capacitivo de humedad relativa y un termistor NTC para la temperatura. El sensor utiliza un protocolo propietario de un solo cable para la transmisión de datos digitales. Las especificaciones de medición incluyen un rango de humedad de 0 a 100\% con precisión de \SI{\pm2} y un rango de temperatura de \SI{-40}{\celsius} a \SI{80}{\celsius} con precisión de $\pm$\SI{0.5}{\celsius} \citep{Aosong2023}, como se muestra en la tabla \ref{tab:dht22_specs} del apéndice \ref{AppendixA}.
+
+Los parámetros operativos comprenden una tensión de alimentación entre \SI{3.3}{\volt} y \SI{5.5}{\volt}, y un consumo típico de \SI{2.5}{\milli\ampere} durante la medición. El sensor presenta una tasa máxima de muestreo de \SI{0.5}{\hertz}, con tiempos de respuesta de \SI{2}{\second} para humedad y \SI{10}{\second} para temperatura \citep{SparkFun2023}.
+
+La integración del DHT22 en el monitor de \MPF permite implementar correcciones por factores ambientales en las mediciones del sensor óptico \cite{Di2018}. Investigaciones previas demuestran que la humedad relativa afecta la precisión en la cuantificación de material particulado \citep{Kuula2020}.
+
+
+
+
+
+\section{Reloj de tiempo real DS3231}
+
+El módulo DS3231 es un reloj de tiempo real (RTC) con oscilador compensado por temperatura (TCXO) y cristal integrado. El dispositivo incorpora un oscilador de cristal MEMS que elimina la necesidad de componentes externos de temporización. La comunicación se realiza mediante el protocolo \IIC con una frecuencia máxima de \SI{400}{\kilo\hertz}. Los antecedentes son presentados en la tabla \ref{tab:ds3231_specs} \citep{Maxim2015}. 
+
+El RTC mantiene el registro de segundos, minutos, horas, día, fecha, mes y año, con compensación automática para meses con menos de 31 días y años bisiestos hasta 2100. La precisión temporal es de $\pm$\SI{2}{\ppm} en el rango de \SI{0}{\celsius} a \SI{40}{\celsius}, y $\pm$\SI{3.5}{\ppm} de \SI{-40}{\celsius} a \SI{85}{\celsius}. El dispositivo incluye un sensor de temperatura digital con precisión de $\pm$\SI{3}{\celsius}.
+
+La integración del DS3231 en el monitor de \MPF permite el registro temporal de las mediciones y la sincronización de los ciclos de muestreo. El dispositivo opera con una tensión entre \SI{2.3}{\volt} y \SI{5.5}{\volt}, e incorpora una entrada para batería de respaldo que mantiene la temporización cuando se interrumpe la alimentación principal. El consumo típico es de \SI{200}{\micro\ampere} en operación normal y \SI{0.84}{\micro\ampere} en modo respaldo.
+
+\begin{table}[h!]
+	\centering
+	\caption{Especificaciones técnicas del RTC DS3231.}
+	\label{tab:ds3231_specs}
+	\small
+    \input{tablas/ds3231_specs.tex}
+\end{table}
+
+\section{Módulo de memoria microSD}
+
+El módulo de almacenamiento emplea una tarjeta microSD con interfaz SPI. Opera a \SI{42}{\mega\hertz} para el registro  de datos bajo sistema de archivos FAT32. La implementación incluye un buffer de escritura de \SI{512}{\byte}. Opera con tensiones entre \SIrange{3.3}{5}{\volt} y su consumo  es de \SI{200}{\milli\ampere} durante la escritura, como se muestra en la tabla \ref{tab:microsd_specs} en el apéndice \ref{AppendixA}. El sistema permite almacenar aproximadamente 1 millón de registros por gigabyte, donde cada registro tiene una tamaño de  \SI{32}{\byte}. Permite contener datos en formato ASCII como registros de \MPF, temperatura y marca temporal, entre otros \cite{SDCard2020, FatFs2022}.
+
+
+\section{Módulo de comunicación ESP8266}
+
+El ESP8266MOD es un módulo Wi-Fi de bajo costo que integra un microcontrolador con el protocolo TCP/IP completa. Este módulo se utiliza en la transmisión de datos en instrumentos de monitoreo ambiental \cite{Kodali2017,Maier2017}, como se muestra en la tabla  \ref{table:esp8266_specs} del apéndice \ref{AppendixA}. La comunicación con el microcontrolador principal STM32 se realiza mediante interfaz UART a una velocidad típica de \SI{115200}{\bps}. El módulo opera en la banda de \SI{2.4}{\giga\hertz} con soporte para el protocolo IEEE 802.11 b/g/n \cite{Espressif2020,ESP8266Datasheet}.
+
+
+
+\section{Fuente de alimentación S-25-5}
+Es una fuente conmutada industrial de salida única. Proporciona una conversión de corriente alterna (CA) a corriente continua (CC). Esta fuente permite la alimentación del sistema y es empleada en aplicaciones industriales y de instrumentación. Las principales características de la fuente se presentan en la tabla \ref{table:s25_specs} \cite{MeanWellS255}.
+
+\begin{table}[H]
+	\centering
+	\small
+	\caption{Especificaciones principales de la fuente S-25-5.}
+	\label{table:s25_specs}
+    \input{tablas/s25_specs.tex}
+\end{table}
+
+%La fuente incorpora múltiples protecciones que garantizan su operación segura y confiable:
+%
+%\begin{itemize}
+%	\item Protección contra sobrecarga: activa entre el \SIrange{105}{150}{\percent} de la potencia nominal
+%	\item Protección contra sobretensión: rango de \SIrange{5.75}{6.75}{\volt}
+%	\item Protección contra cortocircuito: modo hiccup con recuperación automática
+%\end{itemize}
+%
+%El diseño cumple con los estándares de seguridad UL1012 y TUV EN60950-1, con aislamiento reforzado entre entrada y salida (\SI{3}{\kilo\volt} CA), entrada a tierra (\SI{1.5}{\kilo\volt} CA) y salida a tierra (\SI{0.5}{\kilo\volt} CA). La resistencia de aislamiento es superior a \SI{100}{\mega\ohm} a \SI{500}{\volt} CC \citep{MeanWell2017}.
+
+
+
+\section{Protocolos de comunicación}
+
+Los protocolos de comunicación serial constituyen un elemento fundamental para la comunicación de datos entre los distintos módulos del sistema. Permiten la comunicación de diferentes componentes electrónicos. En la tabla \ref{table:protocolos_general} describen los principales protocolos utilizados y en el apéndice \ref{AppendixC} se describen las principales características de cada uno de ellos.
+
+
+
+\begin{table}[h]
+	\small
+	\centering
+	\caption{Características generales de protocolos de comunicación serial.}
+\begin{tabular}{p{2.5cm}cccc}
+	\toprule
+	\textbf{Característica} & \textbf{I\textsuperscript{2}C} & \textbf{UART} & \textbf{SPI} & \textbf{1-Wire} \\
+	\midrule
+	Tipo de sincronización & Síncrono & Asíncrono & Síncrono & Asíncrono \\
+	Número de líneas & 2 & 2 & 4 & 1 \\
+	Velocidad típica & \SIrange{100}{400}{\kilo\hertz} & \SIrange{9600}{115200}{\baud} & \SIrange{1}{50}{\mega\hertz} & \SI{15.4}{\kilo\bit\per\second} \\
+	Tipo de comunicación & \textit{Half-duplex} & \textit{Full-duplex} & \textit{Full-duplex} & \textit{Half-duplex} \\
+	Topología & Multi-esclavo & Punto a punto & Multi-esclavo* & Multi-esclavo \\
+	Direccionamiento & \SIrange{7}{10}{\bit} & No requiere & Por línea CS & \SI{64}{\bit} ROM \\
+	%\midrule
+	\bottomrule
+	\multicolumn{5}{l}{\small{* Requiere una línea CS adicional por cada esclavo}} \\
+\end{tabular}
+	\label{table:protocolos_general}
+\end{table}
+
+%Cada protocolo presenta ventajas y limitaciones específicas que determinan su idoneidad para diferentes aplicaciones. I\textsuperscript{2}C es eficiente para comunicaciones de media velocidad con múltiples dispositivos en distancias cortas. UART destaca por su simplicidad y amplia compatibilidad. SPI ofrece el mayor rendimiento en velocidad pero requiere más líneas de conexión. 1-Wire prioriza la simplicidad del cableado sobre la velocidad de transmisión.
+
+
+%\section{Protocolos de comunicación}
+%
+%%	1	Identificación de los protocolos de comunicación implementados	Diagrama de comunicación del sensor MP2.5 empleado	Comparativa de protocolos
+%En el instrumento se implementó una arquitectura de comunicación multiprotocolo basada en la HAL de STM32 para garantizar la adquisición, almacenamiento y transmisión de datos ambientales. La integración incluye interfaces I²C y UART para el sensor SPS30, SPI para la memoria microSD con sistema de archivos FAT32, UART adicional para módulos de comunicación inalámbrica, y un protocolo propietario para el sensor DHT22. Esta arquitectura presenta una latencia total aproximada de \SI{100}{\milli\second} entre la adquisición y almacenamiento de datos, cumpliendo las especificaciones técnicas para el monitoreo de redes de calidad del aire urbanas \citep{Nasar2024}.
+%\begin{table}[h]
+%	\centering
+%	\small
+%	\caption{Especificaciones de los protocolos de comunicación implementados.}
+%	\begin{tabular}{lccl}
+%		\toprule
+%		\textbf{Protocolo} & \textbf{Velocidad} & \textbf{Latencia} & \textbf{Aplicación} \\
+%		\midrule
+%		\IIC & \SI{100}{\kilo\hertz} & \SI{10}{\milli\second} & Sensor SPS30 (principal) \\
+%		UART & \SI{115200}{\baud} & \SI{10}{\milli\second} & Sensor SPS30 (alternativo) \\
+%		SPI & \SI{42}{\mega\hertz} & \SI{5}{\milli\second} & MicroSD (FAT32) \\
+%		UART & \SI{115200}{\baud} & \SI{85}{\milli\second} & Módulo inalámbrico \\
+%		1-Wire & \SI{5}{\kilo\hertz} & \SI{20}{\milli\second} & Sensor DHT22 \\
+%		\bottomrule
+%	\end{tabular}
+%	\label{table:protocolos}
+%\end{table}
+
+%\newpage 
+\section{Herramientas de desarrollo}
+%La implementación del código se realizó con STM32CubeIDE versión 1.13.0. Este entorno de desarrollo, basado en Eclipse, incorpora configuradores visuales de periféricos y generadores de código C. Este IDE integra el compilador GCC ARM para la arquitectura Cortex-M4 del microcontrolador STM32F429. La programación del firmware se implementó en lenguaje C estándar C99, con el uso de las bibliotecas HAL (\textit{Hardware Abstraction Layer}) proporcionadas por ST Microelectronics. Para el diseño de hardware, se empleó KiCad 8.0, herramienta EDA de código abierto, que permitió el desarrollo del esquemático y el diseño de la placa de circuito impreso (PCB). El control de versiones del código fuente se gestionó mediante Git, se alojó el repositorio en GitHub. La tabla \ref{tab:herramientas} presenta las especificaciones técnicas de las herramientas empleadas.
+
+En la tabla \ref{tab:herramientas} se indican las principales herramientas de desarrollo utilizadas. 
+
+
+\begin{table}[htbp]
+	\small
+	\caption{Herramientas de desarrollo utilizadas en el trabajo.}
+	\label{tab:herramientas}
+	\centering
+	\begin{tabular}{p{0.16\linewidth}p{0.08\linewidth}p{0.25\linewidth}p{0.4\linewidth}}
+		\toprule
+		\textbf{Herramienta} & \textbf{Versión} & \textbf{Empresa} & \textbf{Aplicación} \\
+		\midrule
+		STM32CubeIDE & 1.13.0 & ST Microelectronics & Entorno integrado para desarrollo de firmware \\
+		KiCad & 8.0 & KiCad Project & Diseño de esquemáticos y PCB \\
+		GCC ARM & 10.3 & ARM \& GNU Project & Compilador C/C++ para arquitectura ARM \\
+		Git & 2.42.0 & Software Freedom Conservancy & Sistema de control de versiones distribuido \\
+		\bottomrule
+%		\multicolumn{4}{l}{\footnotesize \textbf{Enlaces:}} \\
+%		\multicolumn{4}{l}{\footnotesize STM32CubeIDE: \url{www.st.com/stm32cubeide}} \\
+%		\multicolumn{4}{l}{\footnotesize KiCad: \url{www.kicad.org}} \\
+%		\multicolumn{4}{l}{\footnotesize GCC ARM: \url{developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain}} \\
+%		\multicolumn{4}{l}{\footnotesize Git: \url{git-scm.com}} \\
+	\end{tabular}
+\end{table}
+
+
+%\begin{table}[htbp]
+%	\small
+%	\caption{Herramientas de desarrollo utilizadas en el proyecto.}
+%	\label{tab:herramientas}
+%	\centering
+%	\begin{tabular}{lll}
+%		\hline
+%		\textbf{Herramienta} & \textbf{Versión} & \textbf{Aplicación} \\
+%		\hline
+%		STM32CubeIDE & 1.13.0 & Desarrollo de firmware \\
+%		KiCad & 8.0 & Diseño de hardware \\
+%		GCC ARM & 10.3 & Compilación de código \\
+%		Git & 2.42.0 & Control de versiones \\
+%		\hline
+%	\end{tabular}
+%\end{table}
+
+
+
+\section{Requerimientos principales del sistema}
+
+Los requerimientos fundamentales que determinaron la funcionalidad y el desempeño del instrumento se describen en la tabla \ref{tab:requisitos_completos}, mientras que en la tabla \ref{tab:priorizacion} se muestran los criterios de priorización que fueron empleados.
+
+\begin{table}[htbp]
+	\centering
+	\small
+	\caption{Requerimientos del instrumento de medición de \MPF.}
+	\label{tab:requisitos_completos}
+	\input{tablas/requisitos_medidor_PM}
+\end{table}
+
+\subsection{Requerimientos funcionales críticos}
+
+Los requerimientos funcionales con ``prioridad obligatoria'' definieron las características operativas esenciales del sistema. La implementación requirió tres sensores de \MPF (RF-a) para establecer un esquema de medición redundante que incrementara la confiabilidad y permitiera la validación cruzada de datos. El sistema de almacenamiento local (RF-b) se especificó para preservar la información ante eventuales fallos en la comunicación o pérdida de conectividad. La integración del reloj de tiempo real (RF-f) fue necesaria para asegurar la precisión en el registro temporal de las mediciones.
+
+Los requerimientos de ``prioridad importante'' (P2) complementaron funcionalidades como: el procesamiento estadístico automático (RF-c), necesario para mejorar la precisión de los datos; y la identificación única de instrumentos (RF-e), para permitir la gestión del dato en redes de monitoreo.
+
+\subsection{Especificaciones técnicas fundamentales}
+
+En el ámbito del hardware, se establecieron dos requerimientos P1: la capacidad de gestionar múltiples sensores (RH-b) y la implementación del protocolo de comunicación (RH-c). El rango operativo de medición requirió un intervalo entre \SIrange{0}{500}{\micro\gram\per\cubic\metre} con una precisión de \SI{\pm10}{\percent} (RH-d). Estas especificaciones técnicas aseguraron la obtención de mediciones confiables en condiciones típicas de contaminación urbana.
+
+En el ámbito del software, la implementación de variables en punto flotante (RS-a) constituyó un requerimiento obligatorio, necesario para el procesamiento y presentación  de los datos entregados por el sensor. % La tabla \ref{tab:requisitos} presenta los requerimientos funcionales de software adicionales.
+
+\subsection{Infraestructura y protección}
+
+Los requerimientos de infraestructura establecieron las condiciones necesarias para la operación continua y segura del instrumento. La compatibilidad con la red eléctrica de \SI{220}{\volt} (RA-a) se especificó para asegurar el funcionamiento en instalaciones estándar. El diseño requirió un gabinete de protección (RG-a), con certificación IP65 o superior (RG-b), para preservar la integridad del equipo ante condiciones ambientales adversas, como exposición a lluvia y polvo.
+
+\subsection{Validación y documentación técnica}
+
+La calibración mediante sensores certificados (RE-c) constituyó un requisito fundamental para asegurar la calidad. El trabajo requirió documentación técnica, que incluyó el manual de operación y mantenimiento (RD-a) y los esquemáticos de conexiones (RD-c). Esta documentación se estableció como requisito para permitir la correcta instalación, operación y mantenimiento del sistema.
+
+
+
+
 %----------------------------------------------------------------------------------------
 %	SECTION 1
 %----------------------------------------------------------------------------------------
-Todos los capítulos deben comenzar con un breve párrafo introductorio que indique cuál es el contenido que se encontrará al leerlo.  La redacción sobre el contenido de la memoria debe hacerse en presente y todo lo referido al proyecto en pasado, siempre de modo impersonal.
-
-\section{Estilo y convenciones}
-\label{sec:ejemplo}
-
-\subsection{Uso de mayúscula inicial para los título de secciones}
-
-Si en el texto se hace alusión a diferentes partes del trabajo referirse a ellas como capítulo, sección o subsección según corresponda. Por ejemplo: ``En el capítulo \ref{Chapter1} se explica tal cosa'', o ``En la sección \ref{sec:ejemplo} se presenta lo que sea'', o ``En la subsección \ref{subsec:ejemplo} se discute otra cosa''.
-
-Cuando se quiere poner una lista tabulada, se hace así:
-
-\begin{itemize}
-	\item Este es el primer elemento de la lista.
-	\item Este es el segundo elemento de la lista.
-\end{itemize}
-
-Notar el uso de las mayúsculas y el punto al final de cada elemento.
-
-Si se desea poner una lista numerada el formato es este:
-
-\begin{enumerate}
-	\item Este es el primer elemento de la lista.
-	\item Este es el segundo elemento de la lista.
-\end{enumerate}
-
-Notar el uso de las mayúsculas y el punto al final de cada elemento.
-
-\subsection{Este es el título de una subsección}
-\label{subsec:ejemplo}
-
-Se recomienda no utilizar \textbf{texto en negritas} en ningún párrafo, ni tampoco texto \underline{subrayado}. En cambio sí se debe utilizar \textit{texto en itálicas} para palabras en un idioma extranjero, al menos la primera vez que aparecen en el texto. En el caso de palabras que estamos inventando se deben utilizar ``comillas'', así como también para citas textuales. Por ejemplo, un \textit{digital filter} es una especie de ``selector'' que permite separar ciertos componentes armónicos en particular.
-
-La escritura debe ser impersonal. Por ejemplo, no utilizar ``el diseño del firmware lo hice de acuerdo con tal principio'', sino ``el firmware fue diseñado utilizando tal principio''. 
-
-El trabajo es algo que al momento de escribir la memoria se supone que ya está concluido, entonces todo lo que se refiera a hacer el trabajo se narra en tiempo pasado, porque es algo que ya ocurrió. Por ejemplo, "se diseñó el firmware empleando la técnica de test driven development".
-
-En cambio, la memoria es algo que está vivo cada vez que el lector la lee. Por eso transcurre siempre en tiempo presente, como por ejemplo:
-
-``En el presente capítulo se da una visión global sobre las distintas pruebas realizadas y los resultados obtenidos. Se explica el modo en que fueron llevados a cabo los test unitarios y las pruebas del sistema''.
-
-Se recomienda no utilizar una sección de glosario sino colocar la descripción de las abreviaturas como parte del mismo cuerpo del texto. Por ejemplo, RTOS (\textit{Real Time Operating System}, Sistema Operativo de Tiempo Real) o en caso de considerarlo apropiado mediante notas a pie de página.
-
-Si se desea indicar alguna página web utilizar el siguiente formato de referencias bibliográficas, dónde las referencias se detallan en la sección de bibliografía de la memoria, utilizado el formato establecido por IEEE en \citep{IEEE:citation}. Por ejemplo, ``el presente trabajo se basa en la plataforma EDU-CIAA-NXP \citep{CIAA}, la cual...''.
-
-\subsection{Figuras} 
-
-Al insertar figuras en la memoria se deben considerar determinadas pautas. Para empezar, usar siempre tipografía claramente legible. Luego, tener claro que \textbf{es incorrecto} escribir por ejemplo esto: ``El diseño elegido es un cuadrado, como se ve en la siguiente figura:''
-
-\begin{figure}[h]
-\centering
-\includegraphics[scale=.45]{./Figures/cuadradoAzul.png}
-\end{figure}
-
-La forma correcta de utilizar una figura es con referencias cruzadas, por ejemplo: ``Se eligió utilizar un cuadrado azul para el logo, como puede observarse en la figura \ref{fig:cuadradoAzul}''.
-
-\begin{figure}[ht]
-	\centering
-	\includegraphics[scale=.45]{./Figures/cuadradoAzul.png}
-	\caption{Ilustración del cuadrado azul que se eligió para el diseño del logo.}
-	\label{fig:cuadradoAzul}
-\end{figure}
-
-El texto de las figuras debe estar siempre en español, excepto que se decida reproducir una figura original tomada de alguna referencia. En ese caso la referencia de la cual se tomó la figura debe ser indicada en el epígrafe de la figura e incluida como una nota al pie, como se ilustra en la figura \ref{fig:palabraIngles}.
-
-\begin{figure}[htpb]
-	\centering
-	\includegraphics[scale=.3]{./Figures/word.jpeg}
-	\caption{Imagen tomada de la página oficial del procesador\protect\footnotemark.}
-	\label{fig:palabraIngles}
-\end{figure}
-
-\footnotetext{Imagen tomada de \url{https://goo.gl/images/i7C70w}}
-
-La figura y el epígrafe deben conformar una unidad cuyo significado principal pueda ser comprendido por el lector sin necesidad de leer el cuerpo central de la memoria. Para eso es necesario que el epígrafe sea todo lo detallado que corresponda y si en la figura se utilizan abreviaturas entonces aclarar su significado en el epígrafe o en la misma figura.
-
-
-
-\begin{figure}[ht]
-	\centering
-	\includegraphics[scale=.37]{./Figures/questionMark.png}
-	\caption{¿Por qué de pronto aparece esta figura?}
-	\label{fig:questionMark}
-\end{figure}
-
-Nunca colocar una figura en el documento antes de hacer la primera referencia a ella, como se ilustra con la figura \ref{fig:questionMark}, porque sino el lector no comprenderá por qué de pronto aparece la figura en el documento, lo que distraerá su atención.
-
-Otra posibilidad es utilizar el entorno \textit{subfigure} para incluir más de una figura, como se puede ver en la figura \ref{fig:three graphs}. Notar que se pueden referenciar también las figuras internas individualmente de esta manera: \ref{fig:1de3}, \ref{fig:2de3} y \ref{fig:3de3}.
- 
-\begin{figure}[!htpb]
-     \centering
-     \begin{subfigure}[b]{0.3\textwidth}
-         \centering
-         \includegraphics[width=.65\textwidth]{./Figures/questionMark}
-         \caption{Un caption.}
-         \label{fig:1de3}
-     \end{subfigure}
-     \hfill
-     \begin{subfigure}[b]{0.3\textwidth}
-         \centering
-         \includegraphics[width=.65\textwidth]{./Figures/questionMark}
-         \caption{Otro.}
-         \label{fig:2de3}
-     \end{subfigure}
-     \hfill
-     \begin{subfigure}[b]{0.3\textwidth}
-         \centering
-         \includegraphics[width=.65\textwidth]{./Figures/questionMark}
-         \caption{Y otro más.}
-         \label{fig:3de3}
-     \end{subfigure}
-        \caption{Tres gráficos simples}
-        \label{fig:three graphs}
-\end{figure}
-
-El código para generar las imágenes se encuentra disponible para su reutilización en el archivo \file{Chapter2.tex}.
-
-\subsection{Tablas}
-
-Para las tablas utilizar el mismo formato que para las figuras, sólo que el epígrafe se debe colocar arriba de la tabla, como se ilustra en la tabla \ref{tab:peces}. Observar que sólo algunas filas van con líneas visibles y notar el uso de las negritas para los encabezados.  La referencia se logra utilizando el comando \verb|\ref{<label>}| donde label debe estar definida dentro del entorno de la tabla.
-
-\begin{verbatim}
-\begin{table}[h]
-	\centering
-	\caption[caption corto]{caption largo más descriptivo}
-	\begin{tabular}{l c c}    
-		\toprule
-		\textbf{Especie}     & \textbf{Tamaño} & \textbf{Valor}\\
-		\midrule
-		Amphiprion Ocellaris & 10 cm           & \$ 6.000 \\		
-		Hepatus Blue Tang    & 15 cm           & \$ 7.000 \\
-		Zebrasoma Xanthurus  & 12 cm           & \$ 6.800 \\
-		\bottomrule
-		\hline
-	\end{tabular}
-	\label{tab:peces}
-\end{table}
-\end{verbatim}
-
-
-\begin{table}[h]
-	\centering
-	\caption[caption corto]{caption largo más descriptivo}
-	\begin{tabular}{l c c}    
-		\toprule
-		\textbf{Especie} 	 & \textbf{Tamaño} 		& \textbf{Valor}  \\
-		\midrule
-		Amphiprion Ocellaris & 10 cm 				& \$ 6.000 \\		
-		Hepatus Blue Tang	 & 15 cm				& \$ 7.000 \\
-		Zebrasoma Xanthurus	 & 12 cm				& \$ 6.800 \\
-		\bottomrule
-		\hline
-	\end{tabular}
-	\label{tab:peces}
-\end{table}
-
-En cada capítulo se debe reiniciar el número de conteo de las figuras y las tablas, por ejemplo, figura 2.1 o tabla 2.1, pero no se debe reiniciar el conteo en cada sección. Por suerte la plantilla se encarga de esto por nosotros.
-
-\subsection{Ecuaciones}
-\label{sec:Ecuaciones}
-
-Al insertar ecuaciones en la memoria dentro de un entorno \textit{equation}, éstas se numeran en forma automática  y se pueden referir al igual que como se hace con las figuras y tablas, por ejemplo ver la ecuación \ref{eq:metric}.
-
-\begin{equation}
-	\label{eq:metric}
-	ds^2 = c^2 dt^2 \left( \frac{d\sigma^2}{1-k\sigma^2} + \sigma^2\left[ d\theta^2 + \sin^2\theta d\phi^2 \right] \right)
-\end{equation}
-                                                        
-Es importante tener presente que si bien las ecuaciones pueden ser referidas por su número, también es correcto utilizar los dos puntos, como por ejemplo ``la expresión matemática que describe este comportamiento es la siguiente:''
-
-\begin{equation}
-	\label{eq:schrodinger}
-	\frac{\hbar^2}{2m}\nabla^2\Psi + V(\mathbf{r})\Psi = -i\hbar \frac{\partial\Psi}{\partial t}
-\end{equation}
-
-Para generar la ecuación \ref{eq:metric} se utilizó el siguiente código:
-
-\begin{verbatim}
-\begin{equation}
-	\label{eq:metric}
-	ds^2 = c^2 dt^2 \left( \frac{d\sigma^2}{1-k\sigma^2} + 
-	\sigma^2\left[ d\theta^2 + 
-	\sin^2\theta d\phi^2 \right] \right)
-\end{equation}
-\end{verbatim}
-
-Y para la ecuación \ref{eq:schrodinger}:
-
-\begin{verbatim}
-\begin{equation}
-	\label{eq:schrodinger}
-	\frac{\hbar^2}{2m}\nabla^2\Psi + V(\mathbf{r})\Psi = 
-	-i\hbar \frac{\partial\Psi}{\partial t}
-\end{equation}
-
-\end{verbatim}
+%Todos los capítulos deben comenzar con un breve párrafo introductorio que indique cuál es el contenido que se encontrará al leerlo.  La redacción sobre el contenido de la memoria debe hacerse en presente y todo lo referido al proyecto en pasado, siempre de modo impersonal.
+%
+%\section{Estilo y convenciones}
+%\label{sec:ejemplo}
+%
+%\subsection{Uso de mayúscula inicial para los título de secciones}
+%
+%Si en el texto se hace alusión a diferentes partes del trabajo referirse a ellas como capítulo, sección o subsección según corresponda. Por ejemplo: ``En el capítulo \ref{Chapter1} se explica tal cosa'', o ``En la sección \ref{sec:ejemplo} se presenta lo que sea'', o ``En la subsección \ref{subsec:ejemplo} se discute otra cosa''.
+%
+%Cuando se quiere poner una lista tabulada, se hace así:
+%
+%\begin{itemize}
+%	\item Este es el primer elemento de la lista.
+%	\item Este es el segundo elemento de la lista.
+%\end{itemize}
+%
+%Notar el uso de las mayúsculas y el punto al final de cada elemento.
+%
+%Si se desea poner una lista numerada el formato es este:
+%
+%\begin{enumerate}
+%	\item Este es el primer elemento de la lista.
+%	\item Este es el segundo elemento de la lista.
+%\end{enumerate}
+%
+%Notar el uso de las mayúsculas y el punto al final de cada elemento.
+%
+%\subsection{Este es el título de una subsección}
+%\label{subsec:ejemplo}
+%
+%Se recomienda no utilizar \textbf{texto en negritas} en ningún párrafo, ni tampoco texto \underline{subrayado}. En cambio sí se debe utilizar \textit{texto en itálicas} para palabras en un idioma extranjero, al menos la primera vez que aparecen en el texto. En el caso de palabras que estamos inventando se deben utilizar ``comillas'', así como también para citas textuales. Por ejemplo, un \textit{digital filter} es una especie de ``selector'' que permite separar ciertos componentes armónicos en particular.
+%
+%La escritura debe ser impersonal. Por ejemplo, no utilizar ``el diseño del firmware lo hice de acuerdo con tal principio'', sino ``el firmware fue diseñado utilizando tal principio''. 
+%
+%El trabajo es algo que al momento de escribir la memoria se supone que ya está concluido, entonces todo lo que se refiera a hacer el trabajo se narra en tiempo pasado, porque es algo que ya ocurrió. Por ejemplo, "se diseñó el firmware empleando la técnica de test driven development".
+%
+%En cambio, la memoria es algo que está vivo cada vez que el lector la lee. Por eso transcurre siempre en tiempo presente, como por ejemplo:
+%
+%``En el presente capítulo se da una visión global sobre las distintas pruebas realizadas y los resultados obtenidos. Se explica el modo en que fueron llevados a cabo los test unitarios y las pruebas del sistema''.
+%
+%Se recomienda no utilizar una sección de glosario sino colocar la descripción de las abreviaturas como parte del mismo cuerpo del texto. Por ejemplo, RTOS (\textit{Real Time Operating System}, Sistema Operativo de Tiempo Real) o en caso de considerarlo apropiado mediante notas a pie de página.
+%
+%Si se desea indicar alguna página web utilizar el siguiente formato de referencias bibliográficas, dónde las referencias se detallan en la sección de bibliografía de la memoria, utilizado el formato establecido por IEEE en \citep{IEEE:citation}. Por ejemplo, ``el presente trabajo se basa en la plataforma EDU-CIAA-NXP \citep{CIAA}, la cual...''.
+%
+%\subsection{Figuras} 
+%
+%Al insertar figuras en la memoria se deben considerar determinadas pautas. Para empezar, usar siempre tipografía claramente legible. Luego, tener claro que \textbf{es incorrecto} escribir por ejemplo esto: ``El diseño elegido es un cuadrado, como se ve en la siguiente figura:''
+%
+%\begin{figure}[h]
+%\centering
+%\includegraphics[scale=.45]{./Figures/cuadradoAzul.png}
+%\end{figure}
+%
+%La forma correcta de utilizar una figura es con referencias cruzadas, por ejemplo: ``Se eligió utilizar un cuadrado azul para el logo, como puede observarse en la figura \ref{fig:cuadradoAzul}''.
+%
+%\begin{figure}[ht]
+%	\centering
+%	\includegraphics[scale=.45]{./Figures/cuadradoAzul.png}
+%	\caption{Ilustración del cuadrado azul que se eligió para el diseño del logo.}
+%	\label{fig:cuadradoAzul}
+%\end{figure}
+%
+%El texto de las figuras debe estar siempre en español, excepto que se decida reproducir una figura original tomada de alguna referencia. En ese caso la referencia de la cual se tomó la figura debe ser indicada en el epígrafe de la figura e incluida como una nota al pie, como se ilustra en la figura \ref{fig:palabraIngles}.
+%
+%\begin{figure}[htpb]
+%	\centering
+%	\includegraphics[scale=.3]{./Figures/word.jpeg}
+%	\caption{Imagen tomada de la página oficial del procesador\protect\footnotemark.}
+%	\label{fig:palabraIngles}
+%\end{figure}
+%
+%\footnotetext{Imagen tomada de \url{https://goo.gl/images/i7C70w}}
+%
+%La figura y el epígrafe deben conformar una unidad cuyo significado principal pueda ser comprendido por el lector sin necesidad de leer el cuerpo central de la memoria. Para eso es necesario que el epígrafe sea todo lo detallado que corresponda y si en la figura se utilizan abreviaturas entonces aclarar su significado en el epígrafe o en la misma figura.
+%
+%
+%
+%\begin{figure}[ht]
+%	\centering
+%	\includegraphics[scale=.37]{./Figures/questionMark.png}
+%	\caption{¿Por qué de pronto aparece esta figura?}
+%	\label{fig:questionMark}
+%\end{figure}
+%
+%Nunca colocar una figura en el documento antes de hacer la primera referencia a ella, como se ilustra con la figura \ref{fig:questionMark}, porque sino el lector no comprenderá por qué de pronto aparece la figura en el documento, lo que distraerá su atención.
+%
+%Otra posibilidad es utilizar el entorno \textit{subfigure} para incluir más de una figura, como se puede ver en la figura \ref{fig:three graphs}. Notar que se pueden referenciar también las figuras internas individualmente de esta manera: \ref{fig:1de3}, \ref{fig:2de3} y \ref{fig:3de3}.
+% 
+%\begin{figure}[!htpb]
+%     \centering
+%     \begin{subfigure}[b]{0.3\textwidth}
+%         \centering
+%         \includegraphics[width=.65\textwidth]{./Figures/questionMark}
+%         \caption{Un caption.}
+%         \label{fig:1de3}
+%     \end{subfigure}
+%     \hfill
+%     \begin{subfigure}[b]{0.3\textwidth}
+%         \centering
+%         \includegraphics[width=.65\textwidth]{./Figures/questionMark}
+%         \caption{Otro.}
+%         \label{fig:2de3}
+%     \end{subfigure}
+%     \hfill
+%     \begin{subfigure}[b]{0.3\textwidth}
+%         \centering
+%         \includegraphics[width=.65\textwidth]{./Figures/questionMark}
+%         \caption{Y otro más.}
+%         \label{fig:3de3}
+%     \end{subfigure}
+%        \caption{Tres gráficos simples}
+%        \label{fig:three graphs}
+%\end{figure}
+%
+%El código para generar las imágenes se encuentra disponible para su reutilización en el archivo \file{Chapter2.tex}.
+%
+%\subsection{Tablas}
+%
+%Para las tablas utilizar el mismo formato que para las figuras, sólo que el epígrafe se debe colocar arriba de la tabla, como se ilustra en la tabla \ref{tab:peces}. Observar que sólo algunas filas van con líneas visibles y notar el uso de las negritas para los encabezados.  La referencia se logra utilizando el comando \verb|\ref{<label>}| donde label debe estar definida dentro del entorno de la tabla.
+%
+%\begin{verbatim}
+%\begin{table}[h]
+%	\centering
+%	\caption[caption corto]{caption largo más descriptivo}
+%	\begin{tabular}{l c c}    
+%		\toprule
+%		\textbf{Especie}     & \textbf{Tamaño} & \textbf{Valor}\\
+%		\midrule
+%		Amphiprion Ocellaris & 10 cm           & \$ 6.000 \\		
+%		Hepatus Blue Tang    & 15 cm           & \$ 7.000 \\
+%		Zebrasoma Xanthurus  & 12 cm           & \$ 6.800 \\
+%		\bottomrule
+%		\hline
+%	\end{tabular}
+%	\label{tab:peces}
+%\end{table}
+%\end{verbatim}
+%
+%
+%\begin{table}[h]
+%	\centering
+%	\caption[caption corto]{caption largo más descriptivo}
+%	\begin{tabular}{l c c}    
+%		\toprule
+%		\textbf{Especie} 	 & \textbf{Tamaño} 		& \textbf{Valor}  \\
+%		\midrule
+%		Amphiprion Ocellaris & 10 cm 				& \$ 6.000 \\		
+%		Hepatus Blue Tang	 & 15 cm				& \$ 7.000 \\
+%		Zebrasoma Xanthurus	 & 12 cm				& \$ 6.800 \\
+%		\bottomrule
+%		\hline
+%	\end{tabular}
+%	\label{tab:peces}
+%\end{table}
+%
+%En cada capítulo se debe reiniciar el número de conteo de las figuras y las tablas, por ejemplo, figura 2.1 o tabla 2.1, pero no se debe reiniciar el conteo en cada sección. Por suerte la plantilla se encarga de esto por nosotros.
+%
+%\subsection{Ecuaciones}
+%\label{sec:Ecuaciones}
+%
+%Al insertar ecuaciones en la memoria dentro de un entorno \textit{equation}, éstas se numeran en forma automática  y se pueden referir al igual que como se hace con las figuras y tablas, por ejemplo ver la ecuación \ref{eq:metric}.
+%
+%\begin{equation}
+%	\label{eq:metric}
+%	ds^2 = c^2 dt^2 \left( \frac{d\sigma^2}{1-k\sigma^2} + \sigma^2\left[ d\theta^2 + \sin^2\theta d\phi^2 \right] \right)
+%\end{equation}
+%                                                        
+%Es importante tener presente que si bien las ecuaciones pueden ser referidas por su número, también es correcto utilizar los dos puntos, como por ejemplo ``la expresión matemática que describe este comportamiento es la siguiente:''
+%
+%\begin{equation}
+%	\label{eq:schrodinger}
+%	\frac{\hbar^2}{2m}\nabla^2\Psi + V(\mathbf{r})\Psi = -i\hbar \frac{\partial\Psi}{\partial t}
+%\end{equation}
+%
+%Para generar la ecuación \ref{eq:metric} se utilizó el siguiente código:
+%
+%\begin{verbatim}
+%\begin{equation}
+%	\label{eq:metric}
+%	ds^2 = c^2 dt^2 \left( \frac{d\sigma^2}{1-k\sigma^2} + 
+%	\sigma^2\left[ d\theta^2 + 
+%	\sin^2\theta d\phi^2 \right] \right)
+%\end{equation}
+%\end{verbatim}
+%
+%Y para la ecuación \ref{eq:schrodinger}:
+%
+%\begin{verbatim}
+%\begin{equation}
+%	\label{eq:schrodinger}
+%	\frac{\hbar^2}{2m}\nabla^2\Psi + V(\mathbf{r})\Psi = 
+%	-i\hbar \frac{\partial\Psi}{\partial t}
+%\end{equation}
+%
+%\end{verbatim}

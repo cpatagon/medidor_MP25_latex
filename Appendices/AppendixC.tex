@@ -1,0 +1,18 @@
+% Appendix C
+
+\chapter{Protocolos de comunicación} % Main appendix title
+
+\label{AppendixC} % For referencing this appendix elsewhere, use \ref{AppendixA}
+
+
+\section{I\textsuperscript{2}C (\textit{Inter-Integrated Circuit})}
+El protocolo \IIC es un bus de comunicación serial síncrono que utiliza dos líneas: SCL (\textit{Serial Clock}) para la señal de reloj y SDA (\textit{Serial Data}) para los datos. Este protocolo permite la comunicación entre múltiples dispositivos en una topología maestro-esclavo, donde cada dispositivo esclavo posee una dirección única. Las velocidades estándar de operación son \SI{100}{\kilo\hertz} y \SI{400}{\kilo\hertz}, aunque existen modos de alta velocidad que pueden alcanzar varios \si{\mega\hertz}. Dentro de las limitaciones se encuentra que este protocolo está pensado para distancias cortas. 
+
+\section{UART (\textit{Universal Asynchronous Receiver-Transmitter})}
+El protocolo UART es un estándar asíncrono que emplea dos líneas de comunicación: TX (Transmisión) y RX (Recepción), lo que permite la comunicación \textit{full-duplex} entre dispositivos. Al ser asíncrono, no requiere una señal de reloj dedicada, pero ambos dispositivos deben configurarse a la misma velocidad de transmisión (\textit{baud rate}). Las velocidades comunes van desde \SI{9600}{\baud} hasta \SI{115200}{\baud}.
+
+\section{SPI (\textit{Serial Peripheral Interface})}
+SPI es un protocolo síncrono que utiliza cuatro líneas: MOSI (\textit{Master Out Slave In}), MISO (\textit{Master In Slave Out}), SCK (\textit{Serial Clock}) y CS (\textit{Chip Select}). Este protocolo permite comunicación \textit{full-duplex} a altas velocidades, típicamente en el rango de \si{\mega\hertz}. La línea CS permite seleccionar individualmente cada dispositivo esclavo, aunque requiere una línea dedicada para cada uno.
+
+\section{1-Wire}
+El protocolo 1-Wire, desarrollado por Dallas Semiconductor, utiliza una única línea para la comunicación bidireccional y, opcionalmente, para la alimentación de los dispositivos (modo parásito). Este protocolo se caracteriza por su simplicidad en el cableado, aunque con velocidades de transmisión relativamente bajas, típicamente \SI{15.4}{\kilo\bit\per\second} en modo estándar.

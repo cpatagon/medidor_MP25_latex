@@ -1,4 +1,7 @@
+%!TEX root = ../TI_Gomez_Luis_.tex
 % Chapter 1
+
+
 
 \chapter{Introducción general} % Main chapter title
 
@@ -7,290 +10,512 @@
 
 %----------------------------------------------------------------------------------------
 
-% Define some commands to keep the formatting separated from the content 
-\newcommand{\keyword}[1]{\textbf{#1}}
-\newcommand{\tabhead}[1]{\textbf{#1}}
-\newcommand{\code}[1]{\texttt{#1}}
-\newcommand{\file}[1]{\texttt{\bfseries#1}}
-\newcommand{\option}[1]{\texttt{\itshape#1}}
-\newcommand{\grados}{$^{\circ}$}
+
+
 
 %----------------------------------------------------------------------------------------
 
 %\section{Introducción}
 
 %----------------------------------------------------------------------------------------
-\section{Aprendiendo \LaTeX{}}
 
-\LaTeX{} no es \textsc{WYSIWYG} (What You See is What You Get), a diferencia de los procesadores de texto como Microsoft Word o Pages de Apple o incluso LibreOffice en el mundo open-source. En lugar de ello, un documento escrito para \LaTeX{} es en realidad un archivo de texto simple o llano que \emph{no contiene formato} . Nosotros le decimos a \LaTeX{} cómo deseamos que se aplique el formato en el documento final escribiendo comandos simples entre el texto, por ejemplo, si quiero usar texto en itálicas para dar énfasis, escribo \verb|\it{texto}| y pongo el texto que quiero en itálicas entre medio de las llaves. Esto significa que \LaTeX{} es un lenguaje del tipo \enquote{mark-up}, muy parecido a HTML.
-
-\subsection{Una introducción (no tan corta) a \LaTeX{}}
-
-Si sos nuevo en \LaTeX{}, hay un muy buen libro electrónico - disponible gratuitamente en Internet como un archivo PDF - llamado, \enquote{A (not so short) Introduction to \LaTeX{}}. El título del libro es generalmente acortado a simplemente \emph{lshort}. Puede descargar la versión más reciente en inglés (ya que se actualiza de vez en cuando) desde aquí:
-\url{http://www.ctan.org/tex-archive/info/lshort/english/lshort.pdf}
-
-Se puede encontrar la versión en español en la lista en esta página: \url{http://www.ctan.org/tex-archive/info/lshort/}
-
-\subsubsection{Una subsubsección}
-
-Acá tiene un ejemplo de una ``subsubsección'' que es el cuarto nivel de ordenamiento del texto, después de capítulo, sección y subsección.  Como se puede ver, las subsubsecciones no van numeradas en el cuerpo del documento ni en el índice.  El formato está definido por la plantilla y no debe ser modificado.
-
-\subsection{Guía matemática rápida para \LaTeX{}}
-
-Si estás escribiendo un documento con mucho contenido matemático, entonces es posible que desees leer el documento de la AMS (American Mathematical Society) llamado, \enquote{A Short Math Guide for \LaTeX{}}. Se puede encontrar en línea en el siguiente link: \url{http://www.ams.org/tex/amslatex.html} en la sección \enquote{Additional Documentation} hacia la parte inferior de la página.
+Este capítulo presenta una revisión sobre la contaminación atmosférica por material particulado fino (\MPF), su impacto en la salud pública y el monitoreo. Se exponen las tecnologías para la medición de este contaminante. Por último, se presentan los objetivos y alcances del trabajo.
 
 
-%----------------------------------------------------------------------------------------
-
-\section{Utilizando esta plantilla}
-
-Si estás familiarizado con \LaTeX{}, entonces podés explorar la estructura de directorios de esta plantilla y proceder a personalizarla agregando tu información en el bloque \emph{INFORMACIÓN DE LA PORTADA} en el archivo \file{memoria.tex}.  
-
-Se puede continuar luego modificando el resto de los archivos siguiendo los lineamientos que se describen en la sección \ref{sec:FillingFile} en la página \pageref{sec:FillingFile}.
-
-Debés asegurarte de leer el capítulo \ref{Chapter2} acerca de las convenciones utilizadas para las Memoria de los Trabajos Finales de la \degreename.
-
-Si sos nuevo en \LaTeX{}, se recomienda que continúes leyendo el documento ya que contiene información básica para aprovechar el potencial de esta herramienta.
+\section{El problema de la contaminación atmosférica}
+% Breve descripción de la problemática y su importancia (1p)
 
 
-%----------------------------------------------------------------------------------------
+De acuerdo con la Organización Mundial de la Salud (OMS), la contaminación atmosférica representa uno de los mayores problemas ambientales en zonas urbanas e industriales y afecta a más del 90\% de la población mundial \citep{WHO2021guidelines}. En la actualidad, se considera como una de las principales causas de muertes prematuras: aproximadamente 6,7 millones de fallecidos en el 2019 \citep{Errigo2020}. Entre los contaminantes atmosféricos de mayor impacto se encuentra el \MPF.
 
-\section{Qué incluye esta plantilla}
+El \MPF, se define como las partículas atmosféricas, sólidas o líquidas, con un diámetro aerodinámico inferior a \SI{2,5}{\micro\meter}. Estas tienen la capacidad de penetrar los sistemas respiratorio y circulatorio humano \citep{WHO2021, Kodros2018}. La evidencia epidemiológica muestra una correlación directa entre la exposición prolongada al contaminante y el aumento en la incidencia de enfermedades cardiovasculares y respiratorias \citep{Jordi2022}. Por consiguiente, el monitoreo preciso y continuo de las concentraciones de material particulado fino en el aire, constituye una herramienta fundamental para la gestión ambiental urbana, el desarrollo e implementación de políticas públicas efectivas y la protección de la salud de la población \citep{Nasar2024}.
 
-\subsection{Carpetas}
+La incertidumbre en los niveles de exposición humana al \MPF persiste como un problema significativo en numerosas áreas urbanas, particularmente en regiones con recursos limitados. La situación es crítica: solo 24 de 234 países cuentan con una densidad mínima de tres monitores del contaminante por millón de habitantes, mientras que 141 países carecen por completo de monitoreo regular \citep{Martin2019}. Un factor crítico adicional es la distancia promedio entre la población y el monitor más cercano, que actualmente alcanza los 220 kilómetros, una separación excesiva que imposibilita realizar evaluaciones precisas de exposición y compromete la calidad del monitoreo ambiental.
 
-Esta plantilla se distribuye como una único archivo .zip que se puede descomprimir en varios archivos y carpetas. Asimismo, se puede consultar el repositorio git para obtener la última versión de los archivos, \url{https://github.com/patriciobos/Plantilla-CESE.git}. Los nombres de las carpetas son, o pretender ser, auto-explicativos.
-
-\keyword{Appendices} -- Esta es la carpeta donde se deben poner los apéndices. Cada apéndice debe ir en su propio archivo \file{.tex}. Se incluye un ejemplo y una plantilla en la carpeta.
-
-\keyword{Chapters} -- Esta es la carpeta donde se deben poner los capítulos de la memoria. Cada capítulo debe ir un su propio archivo \file{.tex} por separado.  Se ofrece por defecto, la siguiente estructura de capítulos y se recomienda su utilización dentro de lo posible:
-
-\begin{itemize}
-\item Capítulo 1: Introducción general	
-\item Capítulo 2: Introducción específica
-\item Capítulo 3: Diseño e implementación
-\item Capítulo 4: Ensayos y resultados
-\item Capítulo 5: Conclusiones
-
-\end{itemize}
-
-Esta estructura de capítulos es la que se recomienda para las memorias de la especialización.
-
-\keyword{Figures} -- Esta carpeta contiene todas las figuras de la memoria.  Estas son las versiones finales de las imágenes que van a ser incluidas en la memoria.  Pueden ser imágenes en formato \textit{raster}\footnote{\url{https://en.wikipedia.org/wiki/Raster_graphics}} como \file{.png}, \file{.jpg} o en formato vectoriales\footnote{\url{https://en.wikipedia.org/wiki/Vector_graphics}} como \file{.pdf}, \file{.ps}.  Se debe notar que utilizar imágenes vectoriales disminuye notablemente el peso del documento final y acelera el tiempo de compilación por lo que es recomendable su utilización siempre que sea posible.
-
-\subsection{Archivos}
-
-También están incluidos varios archivos, la mayoría de ellos son de texto plano y se puede ver su contenido en un editor de texto. Después de la compilación inicial, se verá que más archivos auxiliares son creados por \ LaTeX{} o BibTeX, pero son de uso interno y no es necesario hacer nada en particular con ellos.  Toda la información necesaria para compilar el documento se encuentra en los archivos \file{.tex}, \file{.bib}, \file{.cls} y en las imágenes de la carpeta Figures.
-
-\keyword{referencias.bib} - este es un archivo importante que contiene toda la información de referencias bibliográficas que se utilizarán para las citas en la memoria en conjunto con BibTeX. Usted puede escribir las entradas bibliográficas en forma manual, aunque existen también programas de gestión de referencias que facilitan la creación y gestión de las referencias y permiten exportarlas en formato BibTeX.  También hay disponibles sitios web como \url{books.google.com} que permiten obtener toda la información necesaria para una cita en formato BibTeX. Ver sección \ref{sec:biblio}
-
-\keyword{MastersDoctoralThesis.cls} -- este es un archivo importante. Es el archivos con la clase que le informa a \LaTeX{} cómo debe dar formato a la memoria. El usuario de la plantilla no debería necesitar modificar nada de este archivo.
-
-\keyword{memoria.pdf} -- esta es su memoria con una tipografía bellamente compuesta (en formato de archivo PDF) creado por \LaTeX{}. Se distribuye con la plantilla y después de compilar por primera vez sin hacer ningún cambio se debería obtener una versión idéntica a este documento.
-
-\keyword{memoria.tex} -- este es un archivo importante. Este es el archivo que tiene que compilar \LaTeX{} para producir la memoria como un archivo PDF. Contiene un marco de trabajo y estructuras que le indican a \LaTeX{} cómo diagramar la memoria.  Está altamente comentado para que se pueda entender qué es lo que realiza cada línea de código y por qué está incluida en ese lugar.  En este archivo se debe completar la información personalizada de las primeras sección según se indica en la sección \ref{sec:FillingFile}.
-
-Archivos que \emph{no} forman parte de la distribución de la plantilla pero que son generados por \LaTeX{} como archivos auxiliares necesarios para la producción de la memoria.pdf son:
-
-\keyword{memoria.aux} -- este es un archivo auxiliar generado por \LaTeX{}, si se borra \LaTeX{} simplemente lo regenera cuando se compila el archivo principal \file{memoria.tex}.
-
-\keyword{memoria.bbl} -- este es un archivo auxiliar generado por BibTeX, si se borra BibTeX simplemente lo regenera cuando se compila el archivo principal \file{memoria.tex}. Mientras que el archivo \file{.bib} contiene todas las referencias que hay, este archivo \file{.bbl} contine sólo las referencias que han sido citadas y se utiliza para la construcción de la bibiografía.
-
-\keyword{memoria.blg} -- este es un archivo auxiliar generado por BibTeX, si se borra BibTeX simplemente lo regenera cuando se compila el archivo principal \file{memoria.tex}.
-
-\keyword{memoria.lof} -- este es un archivo auxiliar generado por \LaTeX{}, si se borra \LaTeX{} simplemente lo regenera cuando se compila el archivo principal \file{memoria.tex}.  Le indica a \LaTeX{} cómo construir la sección \emph{Lista de Figuras}.
- 
-\keyword{memoria.log} --  este es un archivo auxiliar generado por \LaTeX{}, si se borra \LaTeX{} simplemente lo regenera cuando se compila el archivo principal \file{memoria.tex}. Contiene mensajes de \LaTeX{}. Si se reciben errores o advertencias durante la compilación, se guardan en este archivo \file{.log}.
-
-\keyword{memoria.lot} -- este es un archivo auxiliar generado por \LaTeX{}, si se borra \LaTeX{} simplemente lo regenera cuando se compila el archivo principal \file{memoria.tex}.  Le indica a \LaTeX{} cómo construir la sección \emph{Lista de Tablas}.
-
-\keyword{memoria.out} -- este es un archivo auxiliar generado por \LaTeX{}, si se borra \LaTeX{} simplemente lo regenera cuando se compila el archivo principal \file{memoria.tex}.
-
-De esta larga lista de archivos, sólo aquellos con la extensión \file{.bib}, \file{.cls} y \file{.tex} son importantes.  Los otros archivos auxiliares pueden ser ignorados o borrados ya que \LaTeX{} y BibTeX los regenerarán durante la compilación.
-
-%----------------------------------------------------------------------------------------
-
-\section{Entorno de trabajo}
-
-Ante de comenzar a editar la plantilla debemos tener un editor \LaTeX{} instalado en nuestra computadora.  En forma análoga a lo que sucede en lenguaje C, que se puede crear y editar código con casi cualquier editor, existen ciertos entornos de trabajo que nos pueden simplificar mucho la tarea.  En este sentido, se recomienda, sobre todo para los principiantes en \LaTeX{} la utilización de TexMaker, un programa gratuito y multi-plantaforma que está disponible tanto para windows como para sistemas GNU/linux.
-
-La versión más reciente de TexMaker es la 4.5 y se puede descargar del siguiente link: \url{http://www.xm1math.net/texmaker/download.html}. Se puede consultar el manual de usuario en el siguiente link: \url{http://www.xm1math.net/texmaker/doc.html}.
- 
-
-\subsection{Paquetes adicionales}
-
-Si bien durante el proceso de instalación de TexMaker, o cualquier otro editor que se haya elegido, se instalarán en el sistema los paquetes básicos necesarios para trabajar con \LaTeX{}, la plantilla de los trabajos de Especialización y Maestría requieren de paquete adicionales.
-
-Se indican a continuación los comandos que se deben introducir en la consola de Ubuntu (ctrl + alt + t) para instalarlos:
-
-\begin{lstlisting}[language=bash]
-  $ sudo apt install texlive-lang-spanish texlive-science 
-  $ sudo apt install texlive-bibtex-extra biber
-  $ sudo apt install texlive texlive-fonts-recommended
-  $ sudo apt install texlive-latex-extra
-\end{lstlisting}
-
-
-\subsection{Configurando TexMaker}
-\label{subsec:configurando}
+Ante este panorama, uno de los principales desafíos que enfrentan las agencias ambientales nacionales y locales es el desarrollo e implementación de redes de monitoreo de \MPF más extensas y densas. Estas redes deben integrar múltiples fuentes de datos, lo que incluye: redes oficiales con estándares EPA (\textit{Environmental Protection Agency}), monitores de bajo costo, sensores satelitales y modelos atmosféricos y estadísticos. La implementación de estos sistemas integrados de monitoreo mejora la precisión en la medición de \MPF e identificar zonas críticas de alta contaminación. Estos resultados son fundamentales para evaluar, mitigar y prevenir  los problemas de salud pública y calidad de vida asociados a la contaminación del aire.
 
 
 
-Una vez instalado el programa y los paquetes adicionales se debe abrir el archivo memoria.tex con el editor para ver una pantalla similar a la que se puede apreciar en la figura \ref{fig:texmaker}. 
-Una vez instalado el programa y los paquetes adicionales se debe abrir el archivo memoria.tex con el editor para ver una pantalla similar a la que se puede apreciar en la figura \ref{fig:texmaker}. 
-Una vez instalado el programa y los paquetes adicionales se debe abrir el archivo memoria.tex con el editor para ver una pantalla similar a la que se puede apreciar en la figura \ref{fig:texmaker}. 
-Una vez instalado el programa y los paquetes adicionales se debe abrir el archivo memoria.tex con el editor para ver una pantalla similar a la que se puede apreciar en la figura \ref{fig:texmaker}. 
 
-\vspace{1cm}
 
-\begin{figure}[htbp]
+
+
+
+\section{Estado del arte en la medición de \MPF}
+% Descripción de las soluciones implementadas en el mercado (3p)
+
+Los métodos de cuantificación del \MPF se clasifican fundamentalmente en dos categorías, según el principio físico que emplean para su determinación \citep{Rojano2011}. A continuación, se listan estas clasificaciones.
+
+\subsection{Métodos gravimétricos}
+Los métodos gravimétricos, considerados como referencia por la EPA \citep{Noble2001}, se basan en la captura física y posterior medición de la masa material particulado. Estos sistemas emplean un cabezal de corte selectivo para \MPF y un filtro de captura. La masa de partículas retenidas se determina, generalmente, mediante balanzas analíticas en un laboratorio.
+
+Uno de los métodos gravimétricos comunes son los muestreadores de alto volumen (HiVol), que operan con flujos de aire entre \SI{1,13} y \mcmin{1,70}, lo que permite recolectar muestras  en períodos de 24 horas \citep{QueenslandGov2024b}.
+
+Otro de los métodos usados en la actualidad son las microbalanzas oscilantes (TEOM). Esta tecnología es un avance significativo al proporcionar información en tiempo real de las concentraciones del material particulado mediante un método gravimétrico \citep{QueenslandGov2024}. Estos emplean la frecuencia de oscilación de un elemento cónico que varía según la masa de partículas depositadas \citep{Green2009}.
+
+
+\subsection{Métodos ópticos}
+
+Los métodos ópticos han ganado popularidad por su capacidad de proporcionar datos en tiempo real y requerimientos de mantención menores. Estas técnicas se fundamentan en principios de interacción luz-partícula para determinar la concentración de \MPF. Por ejemplo, el medidor de atenuación beta ($\beta $) mide la reducción en la intensidad de la radiación $\beta $ al atravesar un filtro con partículas depositadas \cite{MetOne2020}. La resolución típica máxima de estos equipos es horaria. Este método en la actualidad se considera como EPA equivalente y es ocupado ampliamente en redes institucionales de medición de calidad del aire \cite{Torres2021}.
+
+Otros métodos ópticos se basan en la dispersión de luz infrarroja (IR) al atravesar una muestra de aire que contiene material particulado \citep{Skoog2018}. La medición de la luz dispersada permite estimar la concentración de \MPF, así como su tamaño, tal como se ve en la figura \ref{fig:difraccionlaser}. La nefelometría láser es otra técnica que mide la luz dispersada por las partículas en suspensión en ángulos distintos al incidente, lo que permite una mejor caracterización del tamaño y concentración. En la actualidad, estos métodos no están considerados como de referencia EPA o equivalente, lo que limita legalmente su aplicación en redes oficiales y como una solución analítica de monitoreo de la calidad del aire.
+
+\begin{figure}[tph!]
 	\centering
-	\includegraphics[width=.5\textwidth]{./Figures/texmaker.png}
-	\caption{Entorno de trabajo de texMaker.}
-	\label{fig:texmaker}
+	\includegraphics[width=0.8\linewidth]{Figures/difraccionLaser}
+	\caption{Representación del funcionamiento de un aparato de difracción láser.}
+	\label{fig:difraccionlaser}
 \end{figure}
 
-\vspace{1cm}
 
-Notar que existe una vista llamada Estructura a la izquierda de la interfaz que nos permite abrir desde dentro del programa los archivos individuales de los capítulos.  A la derecha se encuentra una vista con el archivo propiamente dicho para su edición. Hacia la parte inferior se encuentra una vista del log con información de los resultados de la compilación.  En esta última vista pueden aparecen advertencias o \textit{warning}, que normalmente pueden ser ignorados, y los errores que se indican en color rojo y deben resolverse para que se genere el PDF de salida.
+\subsection{Análisis comparativo de las técnicas de medición}
 
-Recordar que el archivo que se debe compilar con PDFLaTeX es \file{memoria.tex}, si se tratara de compilar alguno de los capítulos saldría un error.  Para salvar la molestia de tener que cambiar de archivo para compilar cada vez que se realice una modificación en un capítulo, se puede definir el archivo \file{memoria.tex} como ``documento maestro'' yendo al menú opciones -> ``definir documento actual como documento maestro'', lo que permite compilar con PDFLaTeX memoria.tex directamente desde cualquier archivo que se esté modificando . Se muestra esta opción en la figura \ref{fig:docMaestro}.
+La selección de métodos para el monitoreo de \MPF requiere una evaluación de las ventajas y limitaciones de cada tecnología. Los métodos gravimétricos, considerados de referencia, se destacan por su alta precisión y trazabilidad \citep{EPA1998}. Sin embargo, presentan desventajas operativas: requieren mantenimiento intensivo, tienen costos elevados de operación y proporcionan datos con baja resolución temporal, lo que limita su capacidad para detectar variaciones a corto plazo en las concentraciones de \MPF.
 
-\begin{figure}[h]
+
+Por otra parte, los métodos ópticos ofrecen ventajas operativas considerables, como el monitoreo continuo y la capacidad de detectar eventos de contaminación en tiempo real \cite{KUMAR2015199}. No obstante, estos sistemas son más susceptibles a interferencias ambientales, particularmente por variaciones en la humedad relativa y la composición química de las partículas. En este contexto, los sensores ópticos de bajo costo han ganado especial atención por su accesibilidad y potencial para aumentar la cobertura espacial del monitoreo \citep{Nalakurthi2024}. Sin embargo, estos dispositivos aún requieren desarrollos  para alcanzar los niveles de precisión y exactitud de los métodos de referencia.
+
+La tendencia actual en el diseño de redes de monitoreo apunta hacia la implementación de sistemas integrados que combinan múltiples tecnologías. Este enfoque permite aprovechar las fortalezas complementarias de cada método: la precisión de los sistemas gravimétricos y la alta resolución temporal de los métodos ópticos. Para optimizar el desempeño de los sensores de bajo costo dentro de estos sistemas integrados, es fundamental aplicar procedimientos específicos de calibración y corrección, los que se describen en las siguientes subsecciones.  
+
+
+
+\subsection{Tecnologías de bajo costo}
+
+
+
+
+Los sensores de bajo costo existentes en el mercado operan bajo el principio de difracción de luz láser. Cuando una partícula en suspensión intercepta el haz láser, se produce una dispersión angular de la luz proporcional al tamaño de la partícula. El patrón de dispersión óptica resultante es captado por un detector. Esta tecnología presenta ventajas sobre los métodos gravimétricos tradicionales, como menor costo y mayor frecuencia de muestreo. Sin embargo, es importante reconocer sus limitaciones, principalmente una menor precisión y exactitud en comparación con las técnicas estándar. Cabe destacar que estos instrumentos ópticos aún no han recibido la certificación de la Agencia de Protección Ambiental (EPA) como métodos analíticos estándar para la cuantificación de \MPF.
+
+Estudios realizados a sensores comerciales de bajo costo \citep{Kuula2020}, a modelos que se muestran en la tabla \ref{table:correlation_sensors}, mostraron limitaciones en su capacidad para detectar partículas dentro de los rangos de tamaño superiores a los \SI{2,5}{\um} de radio aerodinámico. En particular se observa que se afecta su precisión en ambientes donde los tamaños de partículas varían considerablemente.
+
+
+% Tabla de correlaciones de sensores de bajo costo con diferentes tamaños de partículas
+\begin{table}[h!]
 	\centering
-	\includegraphics[width=\textwidth]{./Figures/docMaestro.png}
-	\caption{Definir memoria.tex como documento maestro.}
-	\label{fig:docMaestro}
-\end{figure}
-
-En el menú herramientas se encuentran las opciones de compilación.  Para producir un archivo PDF a partir de un archivo .tex se debe ejecutar PDFLaTeX (el shortcut es F6). Para incorporar nueva bibliografía se debe utilizar la opción BibTeX del mismo menú herramientas (el shortcut es F11).
-
-Notar que para actualizar las tablas de contenidos se debe ejecutar PDFLaTeX dos veces.  Esto se debe a que es necesario actualizar algunos archivos auxiliares antes de obtener el resultado final.  En forma similar, para actualizar las referencias bibliográficas se debe ejecutar primero PDFLaTeX, después BibTeX y finalmente PDFLaTeX dos veces por idénticos motivos.
-
-\section{Personalizando la plantilla, el archivo \file{memoria.tex}}
-\label{sec:FillingFile}
-
-Para personalizar la plantilla se debe incorporar la información propia en los distintos archivos \file{.tex}. 
-
-Primero abrir \file{memoria.tex} con TexMaker (o el editor de su preferencia). Se debe ubicar dentro del archivo el bloque de código titulado \emph{INFORMACIÓN DE LA PORTADA} donde se deben incorporar los primeros datos personales con los que se construirá automáticamente la portada.
-
-
-%----------------------------------------------------------------------------------------
-
-\section{El código del archivo \file{memoria.tex} explicado}
-
-El archivo \file{memoria.tex} contiene la estructura del documento y es el archivo de mayor jerarquía de la memoria.  Podría ser equiparable a la función \emph{main()} de un programa en C, o mejor dicho al archivo fuente .c donde se encuentra definida la función main().
-
-La estructura básica de cualquier documento de \LaTeX{} comienza con la definición de clase del documento, es seguida por un preámbulo donde se pueden agregar funcionalidades con el uso de \texttt{paquetes} (equiparables a bibliotecas de C), y finalmente, termina con el cuerpo del documento, donde irá el contenido de la memoria.
-
-\lstset{%
-  basicstyle=\small\ttfamily,
-  language=[LaTeX]{TeX}
-}
-
-\begin{lstlisting}
-\documentclass{article}  <- Definicion de clase
-\usepackage{listings}	 <- Preambulo
-
-\begin{document}	 <- Comienzo del contenido propio 
-	Hello world!
-\end{document}
-\end{lstlisting}
+	\small
+	\caption{Valores de correlación ($r^{2}$) en sensores de bajo costo para la medición de diferentes tamaños de partículas.}
+	\begin{tabular}{lccc}
+		\toprule
+		\textbf{Modelo Sensor} & \textbf{MP1 ($r^{2}$)} & \textbf{\MPF ($r^{2}$)} & \textbf{MP10 ($r^{2}$)} \\
+		\midrule
+		Plantower PMS5003     & \num{0,88}              & 0,82                & 0,65               \\
+		Nova SDS011           & 0,85              & 0,80                & 0,62               \\
+		Sensirion SPS30       & 0,91              & 0,87                & 0,60               \\
+		Sharp GP2Y1010AU0F    & 0,78              & 0,70                & 0,50               \\
+		Omron B5W             & 0,80              & 0,75                & 0,55               \\
+		\bottomrule
+	\end{tabular}
+	\label{table:correlation_sensors}
+\end{table}
 
 
-El archivo \file{memoria.tex} se encuentra densamente comentado para explicar qué páginas, secciones y elementos de formato está creando el código \LaTeX{} en cada línea. El código está dividido en bloques con nombres en mayúsculas para que resulte evidente qué es lo que hace esa porción de código en particular. Inicialmente puede parecer que hay mucho código \LaTeX{}, pero es principalmente código para dar formato a la memoria por lo que no requiere intervención del usuario de la plantilla.  Sí se deben personalizar con su información los bloques indicados como:
+Dentro de las principales conclusiones del estudio se encontraron: 
 
 \begin{itemize}
-	\item Informacion de la memoria
-	\item Resumen
-	\item Agradecimientos
-	\item Dedicatoria
+	\item Limitaciones en la selectividad de tamaño: los sensores de bajo costo no operan correctamente en los rangos de tamaño declarados por los fabricantes.  Esto afecta su precisión en ambientes donde los tamaños de partículas varían considerablemente.
+
+	\item Variabilidad entre unidades del mismo modelo:  se observan diferencias de concentración en la respuesta entre distintas unidades del mismo modelo. Esto implica que cada sensor debe calibrarse individualmente para obtener datos más precisos.
+
+	\item Recomendaciones de corrección:  los resultados sugieren que la precisión de estos sensores puede mejorar con la implementación de ajustes basados en condiciones ambientales locales, como la humedad y el tamaño de las partículas.
+
+	\item Uso potencial y limitaciones en redes de monitoreo: aunque estos sensores tienen un costo accesible y son útiles para extender la cobertura de monitoreo, sus limitaciones indican que su uso debe estar acompañado de modelos de corrección para evitar errores en la interpretación de los datos.
+	
 \end{itemize}
 
-El índice de contenidos, las listas de figura de tablas se generan en forma automática y no requieren intervención ni edición manual por parte del usuario de la plantilla. 
 
-En la parte final del documento se encuentran los capítulos y los apéndices.  Por defecto se incluyen los 5 capítulos propuestos que se encuentran en la carpeta /Chapters. Cada capítulo se debe escribir en un archivo .tex separado y se debe poner en la carpeta \emph{Chapters} con el nombre \file{Chapter1}, \file{Chapter2}, etc\ldots El código para incluir capítulos desde archivos externos se muestra a continuación.
+\subsection{Aplicación de técnicas estadísticas en sensores de bajo costo}
+Las investigaciones recientes han mostrado que los dispositivos ópticos de bajo costo para la medición de \MPF requieren ajustes específicos para alcanzar niveles de precisión comparables a los métodos de referencia. En Owczarek et al. (2023) \citep{Owczarek2023} se han implementado calibraciones basadas en modelos de corrección lineal y de segundo grado. Su investigación destaca la importancia de incorporar parámetros ambientales adicionales como velocidad del viento, temperatura y humedad, cuya inclusión mejora la precisión de las mediciones. Esto permite que estos dispositivos generen resultados equiparables a los métodos estándar.
 
-\begin{verbatim}
-	\include{Chapters/Chapter1}
-	\include{Chapters/Chapter2} 
-	\include{Chapters/Chapter3}
-	\include{Chapters/Chapter4} 
-	\include{Chapters/Chapter5} 
-\end{verbatim}
+En otra investigación, basada en una red de sensores de bajo costo \citep{Ellen2021}, se aplicó un enfoque estadístico para optimizar las mediciones de \MPF. Los modelos empleados fueron regresión lineal múltiple y bosques aleatorios (\textit{random forests}). Adicionalmente, el estudio integró variables ambientales como temperatura y humedad, junto con parámetros espaciales como la proximidad a carreteras. Los resultados muestran una mejora en la precisión de los sensores tras aplicar la corrección estadística, como se evidencia en la tabla \ref{table:improvement_sensors}.
 
-Los apéndices también deben escribirse en archivos .tex separados, que se deben ubicar dentro de la carpeta \emph{Appendices}. Los apéndices vienen comentados por defecto con el caracter \code{\%} y para incluirlos simplemente se debe eliminar dicho caracter.
+\begin{table}[h!]
+	\centering
+	\small
+	\caption{Desempeño de sensores de bajo costo para \MPF con corrección estadística.}
+	\begin{tabular}{lccc}
+		\toprule
+		\textbf{Métrica} & \textbf{Original} & \textbf{\textit{Random Forest} \textsuperscript{a}} & \textbf{Regresión Lineal\textsuperscript{b}} \\
+		\midrule
+		RMSE (\si{\micro\gram\per\cubic\meter}) & \num{5,5} & \num{2,9} & \num{3,1} \\
+		R² & \num{0,55} & \num{0,75} & \num{0,78} \\
+		\bottomrule
+		\multicolumn{4}{l}{\footnotesize\textsuperscript{a}(largo plazo)} \\
+		\multicolumn{4}{l}{\footnotesize\textsuperscript{b}(tiempo real)}
+	\end{tabular}
+	\label{table:improvement_sensors}
+\end{table}
 
-Finalmente, se encuentra el código para incluir la bibliografía en el documento final.  Este código tampoco debe modificarse. La metodología para trabajar las referencias bibliográficas se desarrolla en la sección \ref{sec:biblio}.
-%----------------------------------------------------------------------------------------
-
-\section{Bibliografía}
-\label{sec:biblio}
-
-Las opciones de formato de la bibliografía se controlan a través del paquete de latex \option{biblatex} que se incluye en la memoria en el archivo memoria.tex.  Estas opciones determinan cómo se generan las citas bibliográficas en el cuerpo del documento y cómo se genera la bibliografía al final de la memoria.
-
-En el preámbulo se puede encontrar el código que incluye el paquete biblatex, que no requiere ninguna modificación del usuario de la plantilla, y que contiene las siguientes opciones:
-
-\begin{lstlisting}
-\usepackage[backend=bibtex,
-	natbib=true, 
-	style=numeric, 
-	sorting=none]
-{biblatex}
-\end{lstlisting}
-
-En el archivo \file{reference.bib} se encuentran las referencias bibliográficas que se pueden citar en el documento.  Para incorporar una nueva cita al documento lo primero es agregarla en este archivo con todos los campos necesario.  Todas las entradas bibliográficas comienzan con $@$ y una palabra que define el formato de la entrada.  Para cada formato existen campos obligatorios que deben completarse. No importa el orden en que las entradas estén definidas en el archivo .bib.  Tampoco es importante el orden en que estén definidos los campos de una entrada bibliográfica. A continuación se muestran algunos ejemplos:
-
-\begin{lstlisting}
-@ARTICLE{ARTICLE:1,
-    AUTHOR="John Doe",
-    TITLE="Title",
-    JOURNAL="Journal",
-    YEAR="2017",
-}
-\end{lstlisting}
+En resumen, estos resultados evidencian que la aplicación de técnicas estadísticas puede mejorar la exactitud y precisión de las mediciones realizadas con sensores de bajo costo, lo que acerca su desempeño al de los instrumentos de referencia.
 
 
-\begin{lstlisting}
-@BOOK{BOOK:1,
-    AUTHOR="John Doe",
-    TITLE="The Book without Title",
-    PUBLISHER="Dummy Publisher",
-    YEAR="2100",
-}
-\end{lstlisting}
+
+\section{Motivación inicial}
+% Motivos que generan la tesis (0.5 p)
+Este trabajo surge de la convergencia entre la experiencia del autor en química atmosférica y la necesidad de desarrollar soluciones tecnológicas accesibles para el monitoreo de la calidad del aire en zonas urbanas. La disparidad en las capacidades de monitoreo atmosférico entre países desarrollados y en desarrollo evidencia una brecha tecnológica, donde las poblaciones más vulnerables carecen de información básica sobre su exposición a contaminantes.
+
+La motivación fundamental de esta investigación se centra en el desarrollo de instrumentación de bajo costo pero con alta confiabilidad para el monitoreo del \MPF. Este objetivo busca democratizar el acceso a datos sobre la calidad del aire mediante la implementación de tecnologías en sistemas embebidos y sensores de bajo costo. Este enfoque técnico-científico aborda un desafío de ingeniería y contribuye a la equidad en salud pública y justicia ambiental \cite{HerveEspejo2010}.
+
+\section{Objetivo y alcances}
+
+En esta sección se presentan el objetivo y alcance del trabajo. 
+
+\subsection{Objetivo general}
+Desarrollar e implementar un sistema de medición de \MPF que supere las limitaciones de precisión y exactitud de los sensores ópticos de bajo costo convencionales, al incorporar capacidades de transmisión remota de datos y correcciones estadísticas automatizadas.
+
+\subsection{Alcance}
+Este trabajo buscó proporcionar una solución tecnológica que combine accesibilidad económica con confiabilidad técnica, diseñada específicamente para:
+\begin{itemize}
+	\item Complementar las redes de monitoreo de calidad del aire gestionadas por autoridades ambientales y gobiernos locales.
+	\item Aumentar la densidad espacial de puntos de medición en zonas urbanas.
+	\item Mejorar la disponibilidad de datos sobre calidad del aire para la toma de decisiones en salud pública.
+	\item Ofrecer una alternativa viable para regiones con recursos limitados que requieren expandir sus capacidades de monitoreo ambiental.
+\end{itemize}
 
 
-\begin{lstlisting}
-@INBOOK{BOOK:2,
-    AUTHOR="John Doe",
-    TITLE="The Book without Title",
-    PUBLISHER="Dummy Publisher",
-    YEAR="2100",
-    PAGES="100-200",
-}
-\end{lstlisting}
+%En este proyecto se incluyen las siguientes actividades:
+
+%\begin{enumerate}%[label=\alph*)]
+%	\item \textbf{Diseño y desarrollo del hardware}
+%	\begin{itemize}
+%		\item Diseño y dimensionamiento del hardware acorde a los niveles de consumo eléctrico, necesidad de cómputo, almacenamiento y transmisión de datos.  
+%		\item Selección y adquisición los sensores ópticos de \MPF, y el microcontrolador central, adecuado a los requerimientos de cómputo y administración del sistema.
+%		\item Diseño del sistema de almacenamiento de datos y del mecanismo de transmisión de información. Cada dato deberá contar con hora y fecha. Esta información debe ser proporcionada a partir de la implementación del RTC.
+%		\item Dimensionamiento del sistema de alimentación eléctrica acorde a los requerimientos del hardaware .
+%	\end{itemize}
+%	
+%	\item \textbf{Desarrollo de software}
+%	\begin{itemize}
+%		\item Programación del microprocesador para realizar cálculos y transmitir resultados.
+%		\item Desarrollo de algoritmos para efectuar estadísticas en tiempo real.
+%		\item Generación de algoritmo para el chequeo del funcionamiento de los sensores e implementación de códigos de error en caso de que alguno falle.
+%	\end{itemize}
+%	
+%	\item \textbf{Pruebas de calibración}
+%	\begin{itemize}
+%		\item Calibración inicial de los sensores con estaciones de monitoreo de referencia o instrumentos de referencia disponibles.
+%	\end{itemize}
+%	
+%	\item \textbf{Recolección de datos}
+%	\begin{itemize}
+%		\item Periodo de recolección de datos de \MPF para evaluar el funcionamiento y rendimiento del dispositivo.
+%	\end{itemize}
+%	
+%	\item \textbf{Análisis de datos}
+%	\begin{itemize}
+%		\item Evaluación de precisión y exactitud del dispositivo en comparación con los métodos ópticos tradicionales y los de referencia.
+%	\end{itemize}
+%	
+%	\item \textbf{Documentación}
+%	\begin{itemize}
+%		\item Generación de informes técnicos que validen el rendimiento y robustez del dispositivo.
+%	\end{itemize}
+%	
+%\end{enumerate}
+
+%El presente proyecto no incluye las siguientes actividades:
+
+%\begin{enumerate}%[label=\alph*)]
+%	
+%	\item \textbf{Despliegue a gran escala}
+%	\begin{itemize}
+%		\item Este proyecto no incluye la fabricación en masa ni la distribución a gran escala del dispositivo.
+%	\end{itemize}
+%	
+%	\item \textbf{Mantenimiento prolongado}
+%	\begin{itemize}
+%		\item El mantenimiento del dispositivo más allá del periodo de pruebas no está incluido.
+%	\end{itemize}
+%	
+%	\item \textbf{Formación o capacitación}
+%	\begin{itemize}
+%		\item No se incluye la formación o capacitación para usuarios finales o para entidades gubernamentales.
+%	\end{itemize}
+%	
+%	\item \textbf{Adopción por parte de las autoridades}
+%	\begin{itemize}
+%		\item Aunque se espera que las autoridades consideren esta tecnología, su adopción oficial no está garantizada dentro del alcance de este proyecto.
+%	\end{itemize}
+%	
+%	\item \textbf{Investigaciones futuras}
+%	\begin{itemize}
+%		\item No se incluye el seguimiento a largo plazo de la efectividad del dispositivo en políticas públicas o investigaciones futuras.
+%	\end{itemize}
+%	
+%\end{enumerate}
 
 
-\begin{lstlisting}
-@MISC{WEBSITE:1,
-    HOWPUBLISHED = "\url{http://example.com}",
-    AUTHOR = "Intel",
-    TITLE = "Example Website",
-    MONTH = "12",
-    YEAR = "1988",
-    URLDATE = {2012-11-26}
-}
-\end{lstlisting}
 
-Se debe notar que los nombres \emph{ARTICLE:1}, \emph{BOOK:1}, \emph{BOOK:2} y \emph{WEBSITE:1} son nombres de fantasía que le sirve al autor del documento para identificar la entrada. En este sentido, se podrían reemplazar por cualquier otro nombre.  Tampoco es necesario poner : seguido de un número, en los ejemplos sólo se incluye como un posible estilo para identificar las entradas.
-
-La entradas se citan en el documento con el comando: 
-
-\begin{verbatim}
-\citep{nombre_de_la_entrada}
-\end{verbatim}
-
-Y cuando se usan, se muestran así: \citep{ARTICLE:1}, \citep{BOOK:1}, \citep{BOOK:2}, \citep{WEBSITE:1}.  Notar cómo se conforma la sección Bibliografía al final del documento.
-
-Finalmente y como se mencionó en la subsección \ref{subsec:configurando}, para actualizar las referencias bibliográficas tanto en la sección bibliografía como las citas en el cuerpo del documento, se deben ejecutar las herramientas de compilación PDFLaTeX, BibTeX, PDFLaTeX, PDFLaTeX, en ese orden.  Este procedimiento debería resolver cualquier mensaje "Citation xxxxx on page x undefined".
+%\section{Aprendiendo \LaTeX{}}
+%
+%\LaTeX{} no es \textsc{WYSIWYG} (What You See is What You Get), a diferencia de los procesadores de texto como Microsoft Word o Pages de Apple o incluso LibreOffice en el mundo open-source. En lugar de ello, un documento escrito para \LaTeX{} es en realidad un archivo de texto simple o llano que \emph{no contiene formato} . Nosotros le decimos a \LaTeX{} cómo deseamos que se aplique el formato en el documento final escribiendo comandos simples entre el texto, por ejemplo, si quiero usar texto en itálicas para dar énfasis, escribo \verb|\it{texto}| y pongo el texto que quiero en itálicas entre medio de las llaves. Esto significa que \LaTeX{} es un lenguaje del tipo \enquote{mark-up}, muy parecido a HTML.
+%
+%\subsection{Una introducción (no tan corta) a \LaTeX{}}
+%
+%Si sos nuevo en \LaTeX{}, hay un muy buen libro electrónico - disponible gratuitamente en Internet como un archivo PDF - llamado, \enquote{A (not so short) Introduction to \LaTeX{}}. El título del libro es generalmente acortado a simplemente \emph{lshort}. Puede descargar la versión más reciente en inglés (ya que se actualiza de vez en cuando) desde aquí:
+%\url{http://www.ctan.org/tex-archive/info/lshort/english/lshort.pdf}
+%
+%Se puede encontrar la versión en español en la lista en esta página: \url{http://www.ctan.org/tex-archive/info/lshort/}
+%
+%\subsubsection{Una subsubsección}
+%
+%Acá tiene un ejemplo de una ``subsubsección'' que es el cuarto nivel de ordenamiento del texto, después de capítulo, sección y subsección.  Como se puede ver, las subsubsecciones no van numeradas en el cuerpo del documento ni en el índice.  El formato está definido por la plantilla y no debe ser modificado.
+%
+%\subsection{Guía matemática rápida para \LaTeX{}}
+%
+%Si estás escribiendo un documento con mucho contenido matemático, entonces es posible que desees leer el documento de la AMS (American Mathematical Society) llamado, \enquote{A Short Math Guide for \LaTeX{}}. Se puede encontrar en línea en el siguiente link: \url{http://www.ams.org/tex/amslatex.html} en la sección \enquote{Additional Documentation} hacia la parte inferior de la página.
+%
+%
+%%----------------------------------------------------------------------------------------
+%
+%\section{Utilizando esta plantilla}
+%
+%Si estás familiarizado con \LaTeX{}, entonces podés explorar la estructura de directorios de esta plantilla y proceder a personalizarla agregando tu información en el bloque \emph{INFORMACIÓN DE LA PORTADA} en el archivo \file{memoria.tex}.  
+%
+%Se puede continuar luego modificando el resto de los archivos siguiendo los lineamientos que se describen en la sección \ref{sec:FillingFile} en la página \pageref{sec:FillingFile}.
+%
+%Debés asegurarte de leer el capítulo \ref{Chapter2} acerca de las convenciones utilizadas para las Memoria de los Trabajos Finales de la \degreename.
+%
+%Si sos nuevo en \LaTeX{}, se recomienda que continúes leyendo el documento ya que contiene información básica para aprovechar el potencial de esta herramienta.
+%
+%
+%%----------------------------------------------------------------------------------------
+%
+%\section{Qué incluye esta plantilla}
+%
+%\subsection{Carpetas}
+%
+%Esta plantilla se distribuye como una único archivo .zip que se puede descomprimir en varios archivos y carpetas. Asimismo, se puede consultar el repositorio git para obtener la última versión de los archivos, \url{https://github.com/patriciobos/Plantilla-CESE.git}. Los nombres de las carpetas son, o pretender ser, auto-explicativos.
+%
+%\keyword{Appendices} -- Esta es la carpeta donde se deben poner los apéndices. Cada apéndice debe ir en su propio archivo \file{.tex}. Se incluye un ejemplo y una plantilla en la carpeta.
+%
+%\keyword{Chapters} -- Esta es la carpeta donde se deben poner los capítulos de la memoria. Cada capítulo debe ir un su propio archivo \file{.tex} por separado.  Se ofrece por defecto, la siguiente estructura de capítulos y se recomienda su utilización dentro de lo posible:
+%
+%\begin{itemize}
+%\item Capítulo 1: Introducción general	
+%\item Capítulo 2: Introducción específica
+%\item Capítulo 3: Diseño e implementación
+%\item Capítulo 4: Ensayos y resultados
+%\item Capítulo 5: Conclusiones
+%
+%\end{itemize}
+%
+%Esta estructura de capítulos es la que se recomienda para las memorias de la especialización.
+%
+%\keyword{Figures} -- Esta carpeta contiene todas las figuras de la memoria.  Estas son las versiones finales de las imágenes que van a ser incluidas en la memoria.  Pueden ser imágenes en formato \textit{raster}\footnote{\url{https://en.wikipedia.org/wiki/Raster_graphics}} como \file{.png}, \file{.jpg} o en formato vectoriales\footnote{\url{https://en.wikipedia.org/wiki/Vector_graphics}} como \file{.pdf}, \file{.ps}.  Se debe notar que utilizar imágenes vectoriales disminuye notablemente el peso del documento final y acelera el tiempo de compilación por lo que es recomendable su utilización siempre que sea posible.
+%
+%\subsection{Archivos}
+%
+%También están incluidos varios archivos, la mayoría de ellos son de texto plano y se puede ver su contenido en un editor de texto. Después de la compilación inicial, se verá que más archivos auxiliares son creados por \ LaTeX{} o BibTeX, pero son de uso interno y no es necesario hacer nada en particular con ellos.  Toda la información necesaria para compilar el documento se encuentra en los archivos \file{.tex}, \file{.bib}, \file{.cls} y en las imágenes de la carpeta Figures.
+%
+%\keyword{referencias.bib} - este es un archivo importante que contiene toda la información de referencias bibliográficas que se utilizarán para las citas en la memoria en conjunto con BibTeX. Usted puede escribir las entradas bibliográficas en forma manual, aunque existen también programas de gestión de referencias que facilitan la creación y gestión de las referencias y permiten exportarlas en formato BibTeX.  También hay disponibles sitios web como \url{books.google.com} que permiten obtener toda la información necesaria para una cita en formato BibTeX. Ver sección \ref{sec:biblio}
+%
+%\keyword{MastersDoctoralThesis.cls} -- este es un archivo importante. Es el archivos con la clase que le informa a \LaTeX{} cómo debe dar formato a la memoria. El usuario de la plantilla no debería necesitar modificar nada de este archivo.
+%
+%\keyword{memoria.pdf} -- esta es su memoria con una tipografía bellamente compuesta (en formato de archivo PDF) creado por \LaTeX{}. Se distribuye con la plantilla y después de compilar por primera vez sin hacer ningún cambio se debería obtener una versión idéntica a este documento.
+%
+%\keyword{memoria.tex} -- este es un archivo importante. Este es el archivo que tiene que compilar \LaTeX{} para producir la memoria como un archivo PDF. Contiene un marco de trabajo y estructuras que le indican a \LaTeX{} cómo diagramar la memoria.  Está altamente comentado para que se pueda entender qué es lo que realiza cada línea de código y por qué está incluida en ese lugar.  En este archivo se debe completar la información personalizada de las primeras sección según se indica en la sección \ref{sec:FillingFile}.
+%
+%Archivos que \emph{no} forman parte de la distribución de la plantilla pero que son generados por \LaTeX{} como archivos auxiliares necesarios para la producción de la memoria.pdf son:
+%
+%\keyword{memoria.aux} -- este es un archivo auxiliar generado por \LaTeX{}, si se borra \LaTeX{} simplemente lo regenera cuando se compila el archivo principal \file{memoria.tex}.
+%
+%\keyword{memoria.bbl} -- este es un archivo auxiliar generado por BibTeX, si se borra BibTeX simplemente lo regenera cuando se compila el archivo principal \file{memoria.tex}. Mientras que el archivo \file{.bib} contiene todas las referencias que hay, este archivo \file{.bbl} contine sólo las referencias que han sido citadas y se utiliza para la construcción de la bibiografía.
+%
+%\keyword{memoria.blg} -- este es un archivo auxiliar generado por BibTeX, si se borra BibTeX simplemente lo regenera cuando se compila el archivo principal \file{memoria.tex}.
+%
+%\keyword{memoria.lof} -- este es un archivo auxiliar generado por \LaTeX{}, si se borra \LaTeX{} simplemente lo regenera cuando se compila el archivo principal \file{memoria.tex}.  Le indica a \LaTeX{} cómo construir la sección \emph{Lista de Figuras}.
+% 
+%\keyword{memoria.log} --  este es un archivo auxiliar generado por \LaTeX{}, si se borra \LaTeX{} simplemente lo regenera cuando se compila el archivo principal \file{memoria.tex}. Contiene mensajes de \LaTeX{}. Si se reciben errores o advertencias durante la compilación, se guardan en este archivo \file{.log}.
+%
+%\keyword{memoria.lot} -- este es un archivo auxiliar generado por \LaTeX{}, si se borra \LaTeX{} simplemente lo regenera cuando se compila el archivo principal \file{memoria.tex}.  Le indica a \LaTeX{} cómo construir la sección \emph{Lista de Tablas}.
+%
+%\keyword{memoria.out} -- este es un archivo auxiliar generado por \LaTeX{}, si se borra \LaTeX{} simplemente lo regenera cuando se compila el archivo principal \file{memoria.tex}.
+%
+%De esta larga lista de archivos, sólo aquellos con la extensión \file{.bib}, \file{.cls} y \file{.tex} son importantes.  Los otros archivos auxiliares pueden ser ignorados o borrados ya que \LaTeX{} y BibTeX los regenerarán durante la compilación.
+%
+%%----------------------------------------------------------------------------------------
+%
+%\section{Entorno de trabajo}
+%
+%Ante de comenzar a editar la plantilla debemos tener un editor \LaTeX{} instalado en nuestra computadora.  En forma análoga a lo que sucede en lenguaje C, que se puede crear y editar código con casi cualquier editor, existen ciertos entornos de trabajo que nos pueden simplificar mucho la tarea.  En este sentido, se recomienda, sobre todo para los principiantes en \LaTeX{} la utilización de TexMaker, un programa gratuito y multi-plantaforma que está disponible tanto para windows como para sistemas GNU/linux.
+%
+%La versión más reciente de TexMaker es la 4.5 y se puede descargar del siguiente link: \url{http://www.xm1math.net/texmaker/download.html}. Se puede consultar el manual de usuario en el siguiente link: \url{http://www.xm1math.net/texmaker/doc.html}.
+% 
+%
+%\subsection{Paquetes adicionales}
+%
+%Si bien durante el proceso de instalación de TexMaker, o cualquier otro editor que se haya elegido, se instalarán en el sistema los paquetes básicos necesarios para trabajar con \LaTeX{}, la plantilla de los trabajos de Especialización y Maestría requieren de paquete adicionales.
+%
+%Se indican a continuación los comandos que se deben introducir en la consola de Ubuntu (ctrl + alt + t) para instalarlos:
+%
+%\begin{lstlisting}[language=bash]
+%  $ sudo apt install texlive-lang-spanish texlive-science 
+%  $ sudo apt install texlive-bibtex-extra biber
+%  $ sudo apt install texlive texlive-fonts-recommended
+%  $ sudo apt install texlive-latex-extra
+%\end{lstlisting}
+%
+%
+%\subsection{Configurando TexMaker}
+%\label{subsec:configurando}
+%
+%
+%
+%Una vez instalado el programa y los paquetes adicionales se debe abrir el archivo memoria.tex con el editor para ver una pantalla similar a la que se puede apreciar en la figura \ref{fig:texmaker}. 
+%Una vez instalado el programa y los paquetes adicionales se debe abrir el archivo memoria.tex con el editor para ver una pantalla similar a la que se puede apreciar en la figura \ref{fig:texmaker}. 
+%Una vez instalado el programa y los paquetes adicionales se debe abrir el archivo memoria.tex con el editor para ver una pantalla similar a la que se puede apreciar en la figura \ref{fig:texmaker}. 
+%Una vez instalado el programa y los paquetes adicionales se debe abrir el archivo memoria.tex con el editor para ver una pantalla similar a la que se puede apreciar en la figura \ref{fig:texmaker}. 
+%
+%\vspace{1cm}
+%
+%\begin{figure}[htbp]
+%	\centering
+%	\includegraphics[width=.5\textwidth]{./Figures/texmaker.png}
+%	\caption{Entorno de trabajo de texMaker.}
+%	\label{fig:texmaker}
+%\end{figure}
+%
+%\vspace{1cm}
+%
+%Notar que existe una vista llamada Estructura a la izquierda de la interfaz que nos permite abrir desde dentro del programa los archivos individuales de los capítulos.  A la derecha se encuentra una vista con el archivo propiamente dicho para su edición. Hacia la parte inferior se encuentra una vista del log con información de los resultados de la compilación.  En esta última vista pueden aparecen advertencias o \textit{warning}, que normalmente pueden ser ignorados, y los errores que se indican en color rojo y deben resolverse para que se genere el PDF de salida.
+%
+%Recordar que el archivo que se debe compilar con PDFLaTeX es \file{memoria.tex}, si se tratara de compilar alguno de los capítulos saldría un error.  Para salvar la molestia de tener que cambiar de archivo para compilar cada vez que se realice una modificación en un capítulo, se puede definir el archivo \file{memoria.tex} como ``documento maestro'' yendo al menú opciones -> ``definir documento actual como documento maestro'', lo que permite compilar con PDFLaTeX memoria.tex directamente desde cualquier archivo que se esté modificando . Se muestra esta opción en la figura \ref{fig:docMaestro}.
+%
+%\begin{figure}[h]
+%	\centering
+%	\includegraphics[width=\textwidth]{./Figures/docMaestro.png}
+%	\caption{Definir memoria.tex como documento maestro.}
+%	\label{fig:docMaestro}
+%\end{figure}
+%
+%En el menú herramientas se encuentran las opciones de compilación.  Para producir un archivo PDF a partir de un archivo .tex se debe ejecutar PDFLaTeX (el shortcut es F6). Para incorporar nueva bibliografía se debe utilizar la opción BibTeX del mismo menú herramientas (el shortcut es F11).
+%
+%Notar que para actualizar las tablas de contenidos se debe ejecutar PDFLaTeX dos veces.  Esto se debe a que es necesario actualizar algunos archivos auxiliares antes de obtener el resultado final.  En forma similar, para actualizar las referencias bibliográficas se debe ejecutar primero PDFLaTeX, después BibTeX y finalmente PDFLaTeX dos veces por idénticos motivos.
+%
+%\section{Personalizando la plantilla, el archivo \file{memoria.tex}}
+%\label{sec:FillingFile}
+%
+%Para personalizar la plantilla se debe incorporar la información propia en los distintos archivos \file{.tex}. 
+%
+%Primero abrir \file{memoria.tex} con TexMaker (o el editor de su preferencia). Se debe ubicar dentro del archivo el bloque de código titulado \emph{INFORMACIÓN DE LA PORTADA} donde se deben incorporar los primeros datos personales con los que se construirá automáticamente la portada.
+%
+%
+%%----------------------------------------------------------------------------------------
+%
+%\section{El código del archivo \file{memoria.tex} explicado}
+%
+%El archivo \file{memoria.tex} contiene la estructura del documento y es el archivo de mayor jerarquía de la memoria.  Podría ser equiparable a la función \emph{main()} de un programa en C, o mejor dicho al archivo fuente .c donde se encuentra definida la función main().
+%
+%La estructura básica de cualquier documento de \LaTeX{} comienza con la definición de clase del documento, es seguida por un preámbulo donde se pueden agregar funcionalidades con el uso de \texttt{paquetes} (equiparables a bibliotecas de C), y finalmente, termina con el cuerpo del documento, donde irá el contenido de la memoria.
+%
+%\lstset{%
+%  basicstyle=\small\ttfamily,
+%  language=[LaTeX]{TeX}
+%}
+%
+%\begin{lstlisting}
+%\documentclass{article}  <- Definicion de clase
+%\usepackage{listings}	 <- Preambulo
+%
+%\begin{document}	 <- Comienzo del contenido propio 
+%	Hello world!
+%\end{document}
+%\end{lstlisting}
+%
+%
+%El archivo \file{memoria.tex} se encuentra densamente comentado para explicar qué páginas, secciones y elementos de formato está creando el código \LaTeX{} en cada línea. El código está dividido en bloques con nombres en mayúsculas para que resulte evidente qué es lo que hace esa porción de código en particular. Inicialmente puede parecer que hay mucho código \LaTeX{}, pero es principalmente código para dar formato a la memoria por lo que no requiere intervención del usuario de la plantilla.  Sí se deben personalizar con su información los bloques indicados como:
+%
+%\begin{itemize}
+%	\item Informacion de la memoria
+%	\item Resumen
+%	\item Agradecimientos
+%	\item Dedicatoria
+%\end{itemize}
+%
+%El índice de contenidos, las listas de figura de tablas se generan en forma automática y no requieren intervención ni edición manual por parte del usuario de la plantilla. 
+%
+%En la parte final del documento se encuentran los capítulos y los apéndices.  Por defecto se incluyen los 5 capítulos propuestos que se encuentran en la carpeta /Chapters. Cada capítulo se debe escribir en un archivo .tex separado y se debe poner en la carpeta \emph{Chapters} con el nombre \file{Chapter1}, \file{Chapter2}, etc\ldots El código para incluir capítulos desde archivos externos se muestra a continuación.
+%
+%\begin{verbatim}
+%	\include{Chapters/Chapter1}
+%	\include{Chapters/Chapter2} 
+%	\include{Chapters/Chapter3}
+%	\include{Chapters/Chapter4} 
+%	\include{Chapters/Chapter5} 
+%\end{verbatim}
+%
+%Los apéndices también deben escribirse en archivos .tex separados, que se deben ubicar dentro de la carpeta \emph{Appendices}. Los apéndices vienen comentados por defecto con el caracter \code{\%} y para incluirlos simplemente se debe eliminar dicho caracter.
+%
+%Finalmente, se encuentra el código para incluir la bibliografía en el documento final.  Este código tampoco debe modificarse. La metodología para trabajar las referencias bibliográficas se desarrolla en la sección \ref{sec:biblio}.
+%%----------------------------------------------------------------------------------------
+%
+%\section{Bibliografía}
+%\label{sec:biblio}
+%
+%Las opciones de formato de la bibliografía se controlan a través del paquete de latex \option{biblatex} que se incluye en la memoria en el archivo memoria.tex.  Estas opciones determinan cómo se generan las citas bibliográficas en el cuerpo del documento y cómo se genera la bibliografía al final de la memoria.
+%
+%En el preámbulo se puede encontrar el código que incluye el paquete biblatex, que no requiere ninguna modificación del usuario de la plantilla, y que contiene las siguientes opciones:
+%
+%\begin{lstlisting}
+%\usepackage[backend=bibtex,
+%	natbib=true, 
+%	style=numeric, 
+%	sorting=none]
+%{biblatex}
+%\end{lstlisting}
+%
+%En el archivo \file{reference.bib} se encuentran las referencias bibliográficas que se pueden citar en el documento.  Para incorporar una nueva cita al documento lo primero es agregarla en este archivo con todos los campos necesario.  Todas las entradas bibliográficas comienzan con $@$ y una palabra que define el formato de la entrada.  Para cada formato existen campos obligatorios que deben completarse. No importa el orden en que las entradas estén definidas en el archivo .bib.  Tampoco es importante el orden en que estén definidos los campos de una entrada bibliográfica. A continuación se muestran algunos ejemplos:
+%
+%\begin{lstlisting}
+%@ARTICLE{ARTICLE:1,
+%    AUTHOR="John Doe",
+%    TITLE="Title",
+%    JOURNAL="Journal",
+%    YEAR="2017",
+%}
+%\end{lstlisting}
+%
+%
+%\begin{lstlisting}
+%@BOOK{BOOK:1,
+%    AUTHOR="John Doe",
+%    TITLE="The Book without Title",
+%    PUBLISHER="Dummy Publisher",
+%    YEAR="2100",
+%}
+%\end{lstlisting}
+%
+%
+%\begin{lstlisting}
+%@INBOOK{BOOK:2,
+%    AUTHOR="John Doe",
+%    TITLE="The Book without Title",
+%    PUBLISHER="Dummy Publisher",
+%    YEAR="2100",
+%    PAGES="100-200",
+%}
+%\end{lstlisting}
+%
+%
+%\begin{lstlisting}
+%@MISC{WEBSITE:1,
+%    HOWPUBLISHED = "\url{http://example.com}",
+%    AUTHOR = "Intel",
+%    TITLE = "Example Website",
+%    MONTH = "12",
+%    YEAR = "1988",
+%    URLDATE = {2012-11-26}
+%}
+%\end{lstlisting}
+%
+%Se debe notar que los nombres \emph{ARTICLE:1}, \emph{BOOK:1}, \emph{BOOK:2} y \emph{WEBSITE:1} son nombres de fantasía que le sirve al autor del documento para identificar la entrada. En este sentido, se podrían reemplazar por cualquier otro nombre.  Tampoco es necesario poner : seguido de un número, en los ejemplos sólo se incluye como un posible estilo para identificar las entradas.
+%
+%La entradas se citan en el documento con el comando: 
+%
+%\begin{verbatim}
+%\citep{nombre_de_la_entrada}
+%\end{verbatim}
+%
+%Y cuando se usan, se muestran así: \citep{ARTICLE:1}, \citep{BOOK:1}, \citep{BOOK:2}, \citep{WEBSITE:1}.  Notar cómo se conforma la sección Bibliografía al final del documento.
+%
+%Finalmente y como se mencionó en la subsección \ref{subsec:configurando}, para actualizar las referencias bibliográficas tanto en la sección bibliografía como las citas en el cuerpo del documento, se deben ejecutar las herramientas de compilación PDFLaTeX, BibTeX, PDFLaTeX, PDFLaTeX, en ese orden.  Este procedimiento debería resolver cualquier mensaje "Citation xxxxx on page x undefined".

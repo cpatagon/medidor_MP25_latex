@@ -1,0 +1,55 @@
+	\shorthandoff{<>} % Desactivar caracteres problemáticos
+	
+	
+	\begin{tikzpicture}[ node distance=2cm]
+	% Nodes
+	%\draw[rounded corners] (0,0) rectangle (4,2);
+	
+	\node (observador) 
+	[draw, rectangle, rounded corners, fill=blue!10!white, 
+	align=center, yshift=2cm, xshift=0cm] 						
+	{proceso \\ observador}; %\rotatebox{90}{\faMicrochip}};  
+	
+	
+	\node (buffer) 		
+	[right=of observador,  draw, rectangle, rounded corners, fill=blue!10!white, align=center, yshift=0cm, xshift=1cm] 						
+	{ proceso \\ buffer};
+	
+	\node (aplicacion) 
+	[above =of observador,align=left, xshift=0.5 cm,yshift=-0.3cm]     
+	{\textbf{capa aplicación} }; %\faCloudSunRain
+	
+	\node (segmentacion) 
+	[above =of buffer,align=left, xshift=0 cm,yshift=-1.2cm]     
+	{\textbf{patrón de segmentación} }; %\faCloudSunRain
+	
+	
+	\node (analisis) 		
+	[right=of buffer, draw, rectangle, rounded corners, fill=blue!10!white, align=center, yshift=0cm, xshift=1cm] 						
+	{proceso \\ de análisis};
+	
+	% Nodos invisibles para las etiquetas de las flechas
+	\node (etiqueta1) [left=of buffer, yshift=1.6cm, xshift=-0.2cm] {};
+	\node (etiqueta2) [right=of buffer, yshift=1.6cm, xshift=0.2cm] {};
+	
+	
+	
+	
+	% Arrows
+	\draw[->] (observador) -- (buffer) 
+	node[above, align=center, midway] 
+	{datos \\ producidos};
+	
+	\draw[->] (buffer) -- (analisis) 
+	node[above, align=center, midway] 
+	{datos \\ consumidos};
+	
+	% Ajuste del cuadro segmentado para incluir las etiquetas
+	\begin{scope}[on background layer]
+	\node(aplicacion)
+	[fill=orange!10,  draw, rectangle, inner sep=10pt, rounded corners, fit=(aplicacion) (observador) (analisis)(etiqueta2) ] {};
+	\node[draw, dashed, fill=red!30!white, fit=(buffer) (etiqueta1) (etiqueta2), inner sep=4pt, rounded corners] (box) {};
+	\end{scope}
+	
+	\end{tikzpicture}
+		\shorthandon{<>} % Reactivar caracteres problemáticos

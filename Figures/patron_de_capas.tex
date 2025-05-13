@@ -1,0 +1,11 @@
+%patron de capas
+	\begin{tikzpicture}
+	% Define separated layers
+	\node[draw, fill=orange!30, minimum width=3cm, minimum height=0.8cm] at (0, 2) {aplicación};
+	\node[draw, fill=blue!30, minimum width=3cm, minimum height=0.8cm] at (0, 1.0) {drivers};
+	\node[draw, fill=green!30, minimum width=3cm, minimum height=0.8cm] at (0, 0) {HAL};
+	\node[draw, fill=gray!20, minimum width=3cm, minimum height=0.8cm] at (0, -1.2) {hardware};
+	
+	% Outline dashed box surrounding only the top three layers
+	\draw[dashed] (-1.7, -0.6) rectangle (1.7, 2.7);
+	\end{tikzpicture}

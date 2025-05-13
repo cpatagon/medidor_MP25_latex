@@ -203,7 +203,7 @@
 \RequirePackage[utf8]{inputenc} % Required for inputting international characters
 \RequirePackage[T1]{fontenc} % Output font encoding for international characters
 \RequirePackage{palatino} % Use the Palatino font by default
-\RequirePackage[backend=bibtex,natbib=true, style=numeric, sorting=none]{biblatex} % Use the bibtex backend for bibliography
+\RequirePackage[backend=biber,natbib=true, style=numeric, sorting=none]{biblatex} % Use the bibtex backend for bibliography
 \RequirePackage[autostyle=true]{csquotes} % Required to generate language-dependent quotes in the bibliography
 \RequirePackage{xcolor}
 \RequirePackage{subcaption}
@@ -359,50 +359,50 @@ KOMA-script documentation for details.}]{fancyhdr}
 %----------------------------------------------------------------------------------------
 %	 PORTADA
 %----------------------------------------------------------------------------------------
+% \AtBeginDocument{
+%     \begin{titlepage}
+%     \begin{center}
+%     
+%     \includegraphics[width=.8\textwidth]{./Figures/logoFIUBA.pdf}
+%     \vspace{2cm}
+%     
+%     \textsc{\huge{\degreename}}
+%     \vspace{.5cm} 
+%     
+%     \textsc{\Large Memoria del Trabajo Final}\\[1cm] 
+%     
+%     {\huge \bfseries \ttitle\par}\vspace{0.4cm} 
+%     \vfill
+%     
+%     \vspace{2cm}
+%     \LARGE\textbf{Autor:\\
+%     \authorname}\\ % Author name
+%     
+%     \vspace{1.5cm}
+%     
+%     \large
+%     {Director:} \\
+%     {\dirname} \\% Supervisor name
+%     \ifbool{codirector}{% If the codirector class option has been specified
+%     \vspace{10px}
+%     {Codirector:} \\
+%     {\codirname} % Supervisor name
+%     }{\vspace{2pc}%nothing
+%     }
+%     
+%     \vspace{1cm}
+%     Jurados:\\    
+%     \jurunoname\\
+%     \jurdosname\\
+%     \jurtresname
+%     
+%     \vfill
+%     
+%     \textit{Este trabajo fue realizado en la \ciudadname,\\ entre \fechaINICIOname \hspace{1px} y \fechaFINALname.}
+%     \end{center}
+%     \end{titlepage}
+% }
 
-\AtBeginDocument{
-	\begin{titlepage}
-	\begin{center}
-	
-	\includegraphics[width=.8\textwidth]{./Figures/logoFIUBA.pdf}
-	\vspace{2cm}
-	
-	\textsc{\huge{\degreename}}
-	\vspace{.5cm} 
-	
-	\textsc{\Large Memoria del Trabajo Final}\\[1cm] 
-	
-	{\huge \bfseries \ttitle\par}\vspace{0.4cm} 
-	\vfill
-	
-	\vspace{2cm}
-	\LARGE\textbf{Autor:\\
-	\authorname}\\ % Author name
-	
-	\vspace{1.5cm}
-	
-	\large
-	{Director:} \\
-	{\dirname} \\% Supervisor name
-	\ifbool{codirector}{% If the codirector class option has been specified
-	\vspace{10px}
-	{Codirector:} \\
-	{\codirname} % Supervisor name
-	}{\vspace{2pc}%nothing
-	}
-	
-	\vspace{1cm}
-	Jurados:\\	
-	\jurunoname\\
-	\jurdosname\\
-	\jurtresname
-	
-	\vfill
-	
-	\textit{Este trabajo fue realizado en la \ciudadname,\\ entre \fechaINICIOname \hspace{1px} y \fechaFINALname.}
-	\end{center}
-	\end{titlepage}
-}
 
 
 

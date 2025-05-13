@@ -1,0 +1,19 @@
+%!TEX root = ../memoria.tex
+%\begin{table}[h]
+%	\centering
+%	\caption{Fuentes de alimentación externas}
+%	\label{tab:external_power_sources}
+\begin{tabular}{@{}p{2cm}p{2.3cm}p{2cm}p{3cm}@{}}
+	\toprule
+	Nombre de la entrada & Pines del conector & Rango de voltaje & Límite de corriente máxima \\ 
+	\midrule
+	\multirow{3}{*}{VIN} & CN8 pin 15 & \multirow{3}{*}{\SIrange{7}{12}{\volt}} & \SI{800}{\milli\ampere} (\SI{7}{\volt})\\ 
+	& CN11 pin 24 & & \SI{450}{\milli\ampere} (\SIrange{7}{9}{\volt})\\ 
+	& & & \SI{250}{\milli\ampere} (\SIrange{9}{12}{\volt}) \\ 
+	E5V & CN11 pin 6 & \SIrange{4.75}{5.25}{\volt} & \SI{500}{\milli\ampere} \\ 
+	+3,3 V & CN8 pin 7, CN11 pin 16 & \SIrange{3.0}{3.6}{\volt} & - \\ 
+	\bottomrule
+\end{tabular}
+%\end{table}
+
+

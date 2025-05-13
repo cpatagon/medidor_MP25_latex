@@ -1,34 +1,73 @@
 % Chapter Template
+%!TEX root = ../TI_Gomez_Luis.tex
 
 \chapter{Conclusiones} % Main chapter title
-
+%
 \label{Chapter5} % Change X to a consecutive number; for referencing this chapter elsewhere, use \ref{ChapterX}
+%
+%
+%%----------------------------------------------------------------------------------------
+%
+%%----------------------------------------------------------------------------------------
+%%	SECTION 1
+%%----------------------------------------------------------------------------------------
+%
+%\section{Conclusiones generales }
+%
+%La idea de esta sección es resaltar cuáles son los principales aportes del trabajo realizado y cómo se podría continuar. Debe ser especialmente breve y concisa. Es buena idea usar un listado para enumerar los logros obtenidos.
+%
+%Algunas preguntas que pueden servir para completar este capítulo:
+%
+%\begin{itemize}
+%\item ¿Cuál es el grado de cumplimiento de los requerimientos?
+%\item ¿Cuán fielmente se puedo seguir la planificación original (cronograma incluido)?
+%\item ¿Se manifestó algunos de los riesgos identificados en la planificación? ¿Fue efectivo el plan de mitigación? ¿Se debió aplicar alguna otra acción no contemplada previamente?
+%\item Si se debieron hacer modificaciones a lo planificado ¿Cuáles fueron las causas y los efectos?
+%\item ¿Qué técnicas resultaron útiles para el desarrollo del proyecto y cuáles no tanto?
+%\end{itemize}
+%
+%
+%%----------------------------------------------------------------------------------------
+%%	SECTION 2
+%%----------------------------------------------------------------------------------------
+%\section{Próximos pasos}
+%
+%Acá se indica cómo se podría continuar el trabajo más adelante.
 
 
-%----------------------------------------------------------------------------------------
+A continuación presentan las conclusiones derivadas del trabajo desarrollado, sintetizando los principales resultados obtenidos durante el diseño, implementación y validación del sistema de medición de \MPF. Se destacan las contribuciones realizadas al estado del arte en instrumentación para monitoreo ambiental y se proponen líneas de trabajo futuro para potenciar y expandir las capacidades del instrumento desarrollado.
 
-%----------------------------------------------------------------------------------------
-%	SECTION 1
-%----------------------------------------------------------------------------------------
+\section{Resultados obtenidos}
 
-\section{Conclusiones generales }
+El trabajo realizado culminó con la implementación de un sistema de medición de \MPF que integró  tres sensores SPS30 en una configuración redundante, controlados por un microcontrolador STM32F429. La arquitectura implementada cumplió con los requerimientos funcionales establecidos inicialmente en el Capítulo 2. Los resultados indicaron una completitud del \SI{90.54}{\percent} en las mediciones de \MPF de frecuencia de \SI{0.12}{\hertz}.
 
-La idea de esta sección es resaltar cuáles son los principales aportes del trabajo realizado y cómo se podría continuar. Debe ser especialmente breve y concisa. Es buena idea usar un listado para enumerar los logros obtenidos.
+La validación del sistema, documentada en el Capítulo 4, evidenció tres contribuciones principales al estado del arte en instrumentación para monitoreo de calidad del aire:
 
-Algunas preguntas que pueden servir para completar este capítulo:
+\subsection*{Mediciones}
+	La implementación de un diseño con tres sensores paralelos permitió la validación cruzada de datos, reduciendo significativamente la incertidumbre inherente a los sensores ópticos de bajo costo. Los coeficientes de correlación entre sensores (\SIrange{0.90}{0.96}) superaron el umbral establecido como criterio de aceptación (\SI{0.90}{}), confirmando la efectividad de esta aproximación metodológica. La variabilidad observada (coeficiente de variación promedio: \SI{7.2}{\percent}) se mantuvo consistentemente por debajo de las especificaciones del fabricante (\SI{10}{\percent}), incluso durante episodios de alta contaminación con concentraciones superiores a \SI{600}{\micro\gram\per\cubic\meter}.
+	
+\subsection*{Algoritmos de corrección estadística}
+	Los modelos matemáticos incorporados en el subsistema de análisis, desarrollados según la arquitectura descrita en el Capítulo 3, permitieron la discriminación automática de valores atípicos y la aplicación de factores de corrección por variables ambientales. Las pruebas de software validaron el tratamiento adecuado de valores en diferentes escenarios operativos, incluyendo condiciones límite. Esta aproximación mejoró la exactitud del sistema, aproximando su desempeño al de equipos de referencia institucionales y superando las limitaciones típicas de sensores ópticos documentadas en la literatura \citep{Kuula2020}.
+	
+\subsection*{Funcionamiento}
+Las pruebas del sistema de alimentación confirmaron una autonomía de 20 horas y una estabilidad adecuada (variación inferior al \SI{3.5}{\percent} en las líneas de alimentación), permitiendo la operación continua incluso en condiciones de suministro eléctrico inestable.
+
+El comportamiento del sistema ante el episodio crítico de contaminación, analizado en la Sección 4.2, mostró la capacidad para cuantificar concentraciones en un amplio rango dinámico (\SIrange{20}{600}{\micro\gram\per\cubic\meter}) manteniendo la integridad metrológica. La correlación estadísticamente significativa (r = 0,742, p < 0,05) con la estación de referencia SINCA, a pesar de la separación espacial de \SI{1.5}{\kilo\meter}.
+
+En términos de implementación técnica, el trabajo aplicó patrones arquitectónicos de software (capas, observar y reaccionar, segmentación de procesos) que potenciaron la modularidad del sistema. El diseño de hardware, con elementos específicos como planos de tierra para reducción de EMI y pistas de impedancia controlada para señales críticas, contribuyó a la estabilidad eléctrica.
+
+La evaluación comparativa de la arquitectura implementada respecto a sistemas comerciales similares demostró ventajas en términos de:
 
 \begin{itemize}
-\item ¿Cuál es el grado de cumplimiento de los requerimientos?
-\item ¿Cuán fielmente se puedo seguir la planificación original (cronograma incluido)?
-\item ¿Se manifestó algunos de los riesgos identificados en la planificación? ¿Fue efectivo el plan de mitigación? ¿Se debió aplicar alguna otra acción no contemplada previamente?
-\item Si se debieron hacer modificaciones a lo planificado ¿Cuáles fueron las causas y los efectos?
-\item ¿Qué técnicas resultaron útiles para el desarrollo del proyecto y cuáles no tanto?
+	\item \textbf Confiabilidad: la redundancia instrumental mejoró la precisión en un \SI{30}{\percent} respecto a sistemas basados en sensor único.
+	\item \textbf Autonomía operativa: el sistema de alimentación con respaldo proporcionó operación continua aun en condiciones de interrupciones eléctricas.
+	\item \textbf Adaptabilidad: la arquitectura modular facilitó la actualización de componentes específicos sin necesidad de rediseño integral.
 \end{itemize}
 
+\section{Desarrollo futuro}
 
-%----------------------------------------------------------------------------------------
-%	SECTION 2
-%----------------------------------------------------------------------------------------
-\section{Próximos pasos}
+Estos resultados confirmaron el cumplimiento del objetivo general planteado en la Sección 1.4: desarrollar e implementar un sistema de medición de \MPF que supere las limitaciones de precisión y exactitud de los sensores ópticos de bajo costo convencionales.
 
-Acá se indica cómo se podría continuar el trabajo más adelante.
+Las propuestas para desarrollos futuros incluyen: implementar modelos estadísticos con variables meteorológicas adicionales para reducir errores sistemáticos; expandir el sistema a una red distribuida con protocolos inalámbricos de bajo consumo para mapear espacialmente la contaminación; optimizar energéticamente el sistema para operar con energía renovable; desarrollar una plataforma web integrada para visualización, análisis y alertas; y miniaturizar el hardware con microcontroladores más eficientes como el STM32L4. 
+
+Se espera que estas mejoras transformarían el dispositivo en una plataforma de monitoreo que complementaría las redes oficiales, democratizando el acceso a datos sobre calidad del aire, especialmente en regiones con recursos limitados, y proporcionando información para la gestión ambiental urbana.

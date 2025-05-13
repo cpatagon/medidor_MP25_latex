@@ -1,0 +1,197 @@
+%----------------------------------------------------------------------------------------
+% Preambulo y Configuración
+%----------------------------------------------------------------------------------------
+
+\documentclass[
+    11pt,
+    spanish,
+    singlespacing,
+    parskip,
+    headsepline,
+    bookmarks=true,
+    unicode=true,
+    pdftoolbar=true,
+    pdfmenubar=true,
+    pdffitwindow=false,
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    urlcolor=blue
+]{MastersDoctoralThesis}
+
+\usepackage[utf8]{inputenc} % Codificación de entrada UTF-8
+\usepackage[T1]{fontenc}    % Codificación de salida para caracteres especiales
+\usepackage{graphicx}       % Manejo de gráficos
+\usepackage{eso-pic}        % Permite agregar fondos
+\usepackage{hyperref}       % Manejo de hipervínculos y marcadores
+
+
+\usepackage{enumitem}
+\usepackage{tikz}
+\usepackage{multirow}
+\usepackage{array}       % Para controlar la alineación de las celdas
+\usepackage{booktabs}    % Para mejorar el estilo de las tablas
+\usepackage{fontawesome5}
+\usepackage{siunitx}
+\usepackage{caption}
+\usepackage{micomandos}
+\usepackage{float}
+\usepackage[labelsep=period]{caption}
+
+
+
+
+
+
+
+\usetikzlibrary{fit} 
+%\usepackage{fontawesome}
+\usetikzlibrary{positioning}
+\usetikzlibrary{backgrounds}
+\usetikzlibrary{calc,backgrounds}
+
+% Redefinición de caracteres problemáticos en marcadores
+\hypersetup{
+    pdftitle={Título del Documento},
+    pdfauthor={Autor del Documento},
+    pdfkeywords={Sistemas Embebidos, Internet de las Cosas, Inteligencia Artificial},
+    pdfstartview={FitH},
+    unicode=true,
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    urlcolor=blue
+}
+
+\pdfstringdefDisableCommands{%
+  \def\texttt#1{#1}%
+  \def\textbf#1{#1}%
+  \def\textit#1{#1}%
+  \def\"{\"}%
+  \def\~{~}%
+  \def\'{'}%
+  \def\^{}%
+  \def\textunderscore{\_} % Manejo del subrayado en marcadores
+}
+
+
+% Definir comandos requeridos por la clase
+\newcommand{\degreename}{Maestría en Ciencias} % Cambia según tu título
+\newcommand{\univname}{Universidad Nacional de Ejemplo} % Cambia según tu universidad
+\newcommand{\keywordnames}{Palabras clave:}
+%----------------------------------------------------------------------------------------
+% Documento Principal
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+% Configuración de la portada
+\posgrado{Carrera / Maestría}
+\keywords{Sistemas Embebidos, Internet de las Cosas, Inteligencia Artificial}
+
+% Incluir la portada desde un archivo separado
+\include{portada}
+
+% Configuración del contenido preliminar
+\frontmatter % Usar numeración romana para las páginas preliminares
+\pagestyle{plain} % Estilo de encabezado simple
+
+%----------------------------------------------------------------------------------------
+% Resumen
+%----------------------------------------------------------------------------------------
+
+\begin{abstract}
+\addchaptertocentry{\abstractname} % Agregar resumen al índice
+Este trabajo presenta el diseño e implementación de un instrumento para medir
+material particulado fino (\MPF) en el aire. Este se diseñó para ser usado en
+redes de monitoreo de calidad del aire urbanas, con el objetivo de contribuir a la gestión
+ambiental y la salud pública. La memoria detalla la selección de componentes
+electrónicos, el diseño y desarrollo del software, y las pruebas de calibración y de
+campo.
+
+El trabajo aplicó conocimientos de programación en sistemas embebidos, implementación de protocolos de programación, diseño de hardware en PCB y técnicas de testing para minimizar las fallas.
+
+
+\end{abstract}
+
+%----------------------------------------------------------------------------------------
+% Agradecimientos
+%----------------------------------------------------------------------------------------
+
+\begin{acknowledgements}
+\vspace{1.5cm}
+
+Mi más sincero agradecimiento al Dr. Juan Manuel Cruz Beaufrere, director de este trabajo, por su invaluable orientación académica, rigurosidad metodológica y constante disposición durante todo el proceso de investigación. Su experiencia y conocimientos fueron fundamentales para estructurar y concretar esta tesis.
+
+A la Dra. Zoe Fleming, codirectora de este trabajo, por su motivación y ejemplo al mostrarme cómo acercar la ciencia de la calidad del aire a las comunidades. Su visión sobre la democratización del conocimiento científico y su aplicación a problemas concretos fueron inspiración constante durante el desarrollo de este trabajo.
+
+Al cuerpo docente de la Carrera de Especialización en Sistemas Embebidos (CESE) de la Facultad de Ingeniería de la Universidad de Buenos Aires, por la formación técnica de excelencia y el acompañamiento académico brindado. Los conocimientos transmitidos constituyeron la base fundamental para el desarrollo de este sistema de medición.
+
+Un reconocimiento especial al Ing. Claudio Herranz, cuya pasión por la electrónica y capacidad para transmitir conocimientos prácticos representaron mi primera motivación en este campo. Sus enseñanzas trascendieron lo técnico para demostrar cómo la ingeniería puede transformarse en soluciones concretas para problemas reales.
+
+A las autoridades del Centro de Investigación en Tecnologías para la Sociedad (C+) de la Universidad del Desarrollo, por facilitar el acceso a equipamiento especializado e infraestructura necesaria para la validación experimental del sistema desarrollado.
+
+A mis compañeros de la CESE, por el enriquecedor intercambio de experiencias y conocimientos que contribuyeron significativamente a este trabajo.
+
+A todos quienes de distintas formas aportaron a la concreción de esta tesis, mi profundo agradecimiento.  
+
+\end{acknowledgements}
+
+%----------------------------------------------------------------------------------------
+% Índice
+%----------------------------------------------------------------------------------------
+
+\tableofcontents
+\listoffigures
+\listoftables
+
+%----------------------------------------------------------------------------------------
+% Dedicatoria
+%----------------------------------------------------------------------------------------
+
+\dedicatory{A Claudia Torres, mi compañera de vida, por su amor incondicional, paciencia infinita y apoyo constante durante este proceso. Su fortaleza y comprensión fueron pilares fundamentales para la culminación de este trabajo. A mis hijos Edmundo y Camilo, fuentes inagotables de inspiración y alegría. Que este esfuerzo les muestre que con perseverancia y pasión los objetivos se alcanzan.
+	A mi madre, por sembrar en mí la semilla de la curiosidad y el valor del conocimiento.}
+
+%----------------------------------------------------------------------------------------
+% Capítulos
+%----------------------------------------------------------------------------------------
+
+\mainmatter % Iniciar numeración numérica para el contenido principal
+\pagestyle{thesis} % Estilo de encabezado de tesis
+
+% Incluir capítulos desde archivos separados
+\include{Chapters/Chapter1}
+\include{Chapters/Chapter2}
+\include{Chapters/Chapter3}
+\include{Chapters/Chapter4}
+\include{Chapters/Chapter5}
+
+%----------------------------------------------------------------------------------------
+% Apéndices
+%----------------------------------------------------------------------------------------
+
+\appendix % indicativo para indicarle a LaTeX los siguientes "capítulos" son apéndices
+
+% Incluir los apéndices de la memoria como archivos separadas desde la carpeta Appendices
+% Descomentar las líneas a medida que se escriben los apéndices
+
+\include{Appendices/AppendixA}
+\include{Appendices/AppendixB}
+\include{Appendices/AppendixC}
+
+%----------------------------------------------------------------------------------------
+% Bibliografía
+%----------------------------------------------------------------------------------------
+
+\renewcommand{\bibname}{Bibliografía} % Para asegurarte de que el título sea correcto
+\phantomsection % Necesario para que el enlace del marcador sea correcto
+
+\printbibliography[heading=bibintoc]
+
+\end{document}
+
+
+
+
+
+

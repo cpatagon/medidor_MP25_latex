@@ -1,0 +1,105 @@
+	
+	\shorthandoff{<>} % Desactivar caracteres problemáticos
+	
+	
+	\begin{tikzpicture}[ node distance=1cm]
+	% Nodes
+	%\draw[rounded corners] (0,0) rectangle (4,2);
+	
+	\node (observador) 
+	[draw, rectangle, rounded corners, fill=blue!10!white, 
+	align=center, yshift=2cm, xshift=0cm] 						
+	{proceso\\ observador}; %\rotatebox{90}{\faMicrochip}};  
+	
+	\node (sensor1) 		
+	[above left=of observador, draw, circle, fill=red!10!white, align=center, yshift=0.1cm, xshift=1cm] 	
+	{\faSmog};
+	
+	\node (sensor2) 		
+	[above=of observador, draw, circle, fill=red!10!white, align=center, yshift=-0.3cm, xshift=0.0cm] 	
+	{ \faSmog};
+	
+	\node (sensor3)
+	[above right=of observador, draw, circle, fill=red!10!white, align=center, yshift=0.1cm, xshift=-.80cm]
+	{\faSmog};
+	
+	\node (rtc) 			
+	[below =of observador, draw, circle, align=center,fill=red!10!white, yshift=0cm, xshift=0.0cm]  
+	{\faClock[regular]};
+	\node (sensorRTC) [below=of rtc,align=center, xshift=0 cm,yshift=1cm]     {\textbf{RTC} }; %\faCloudSunRain
+	
+	
+	\node (tyh) 			
+	[below  right=of observador, draw, circle, align=center,fill=red!10!white, yshift=0cm, xshift=-1.0cm]  {\faThermometerHalf};
+	\node (sensorTyH) [below=of tyh, align=center, xshift=0.1 cm,yshift=1cm] 
+	{\textbf{TyH} }; %\faCloudSunRain
+
+
+	
+	\node (sensores) [above =of sensor1,align=center, xshift=1 cm,yshift=-1cm]     {\textbf{sensores  \MPF} }; %\faCloudSunRain
+	
+	\node (aplicacion) 
+	[right=2cm of sensores,align=center, xshift=-0.5 cm,yshift=0.2cm]     
+	{\textbf{capa aplicación} }; %\faCloudSunRain
+	
+	\node (segmentacion) 		
+	[right=of observador, draw, rectangle, rounded corners, fill=red!30!white, align=center, yshift=0cm, xshift=0cm] 						
+	{ patrón \\ segmentación}	;
+	
+	\node (analisis) 		
+	[right=of segmentacion, draw, rectangle, rounded corners, fill=blue!10!white, align=center, yshift=0cm, xshift=0cm] 						
+	{proceso \\ de análisis};
+	
+	\node (despliegue) 		
+	[right=of analisis, draw, rectangle, rounded corners, fill=blue!10!white, align=center, yshift=0cm, xshift=0cm] 						
+	{proceso \\ despliegue};
+	
+	\node (alarma)
+	[below left=of analisis, draw, rectangle, rounded corners, fill=blue!10!white, align=center, yshift=0cm, xshift=1cm] 						
+	{proceso \\ alarma};
+	
+	\node (reactor) 		
+	[below right=of analisis, draw, rectangle, rounded corners, fill=blue!10!white, 	align=center, yshift=0cm, xshift=0cm] 						
+	{ proceso \\ reactor};
+	
+	\node (servidor) 		
+	[below=0.4 cm of reactor,  align=center, yshift=0cm, xshift=0cm] 						
+	{módulo\\inalámbrico \faWifi}; % https://www.ipgp.fr/~moguilny/LaTeX/fontawesome5Icons.pdf
+	
+	\node (led) 		
+	[below=0.5cm of alarma,  align=center, yshift=0cm, xshift=0cm] 						
+	{LED \faLightbulb};
+	
+	\node (memoria) 		
+	[above=of despliegue,  align=center, yshift=0cm, xshift=0cm] 						
+	{memoria \faSdCard };
+	
+	% Bounding Box
+	\begin{scope}[on background layer]
+	\node(aplicacion)[fill=orange!15,  draw, rectangle, rounded corners, fit=(aplicacion)(sensor1) (sensor2) (sensor3) (sensores) (despliegue) (rtc) (servidor) (alarma)] {};
+	\node(driver)[below=of aplicacion,fill=blue!15,  draw, rectangle, rounded corners,
+	minimum width=11cm, minimum height=0.8cm, , yshift=0.8cm, xshift=0cm]{capa drivers} ;
+	\node(hal)[below=of driver,fill=green!10,  draw, rectangle, rounded corners,
+	minimum width=11cm, minimum height=0.8cm, yshift=0.8cm]{capa HAL} ;
+	\node(hardware)[below=of hal,fill=gray!10,  draw, rectangle, rounded corners,
+	minimum width=11cm, minimum height=0.8cm,  yshift=0.5cm]{Hardware} ;
+	\node[draw, dashed, fit=(aplicacion) (driver) (hal), inner sep=8pt, rounded corners] (box) {};
+	\end{scope}
+	
+	% Arrows
+	\draw[-] (observador) -- (sensor1);
+	\draw[-] (observador) -- (sensor2);
+	\draw[-] (observador) -- (sensor3);
+	\draw[->] (observador) -- (segmentacion);
+	\draw[->] (segmentacion) -- (analisis);
+	\draw[->] (analisis) -- (despliegue);
+	\draw[->] (despliegue) -- (memoria);
+	\draw[->] (analisis) -- (reactor);
+	\draw[->] (reactor) -- (servidor); % \faWifi
+	\draw[->] (analisis) -- (alarma);
+	\draw[->] (alarma) -- (led);
+	\draw[-] (rtc) -- (observador);
+	\draw[-] (tyh) -- (observador);
+	
+	\end{tikzpicture}
+		\shorthandon{<>} 

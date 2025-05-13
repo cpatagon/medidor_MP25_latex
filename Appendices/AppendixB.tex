@@ -1,0 +1,86 @@
+% Appendix B
+\chapter{Requerimientos} % Main appendix title
+
+\label{AppendixB}
+
+\begin{table}[htbp]
+	\small
+	\centering
+	\caption{Niveles de priorización de requisitos.}
+	\input{tablas/criterios_priorizacion}
+	
+	\label{tab:priorizacion}
+\end{table}
+
+
+
+\begin{table}[!hbp]
+	\centering
+	\small
+	\caption{Reglas de diseño para la fabricación de PCB.}
+	\label{tab:reglas_pcb}
+	\begin{tabular}{p{0.5\linewidth}p{0.18\linewidth}p{0.15\linewidth}}
+		\toprule
+		\textbf{Parámetro} & \textbf{Valor mínimo} & \textbf{Unidad} \\
+		\midrule
+		\multicolumn{3}{l}{\textbf{Cobre}} \\
+		\midrule
+		Margen mínimo & 0,5 & mm \\
+		Ancho mínimo de pista & 0,2 & mm \\
+		Ancho mínimo de conexión & 0 & mm \\
+		Ancho mínimo de anular & 0,1 & mm \\
+		Mínimo diámetro de vía & 0,5 & mm \\
+		Margen de cobre a agujero & 0,25 & mm \\
+		Margen de cobre a borde & 0,5 & mm \\
+		\midrule
+		\multicolumn{3}{l}{\textbf{Orificios}} \\
+		\midrule
+		Orificio pasante mínimo & 0,3 & mm \\
+		Margen de orificio a orificio & 0,25 & mm \\
+		\midrule
+		\multicolumn{3}{l}{\textbf{Vías enterradas (uVias)}} \\
+		\midrule
+		Diámetro mínimo de uVia & 0,2 & mm \\
+		Orificio mínimo de uVia & 0,1 & mm \\
+		\midrule
+		\multicolumn{3}{l}{\textbf{Serigrafía}} \\
+		\midrule
+		Margen mínimo de elemento & 0 & mm \\
+		Alto mínimo del texto & 0,8 & mm \\
+		Grosor mínimo del texto & 0,08 & mm \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+
+\begin{table}[!hbp]
+	\centering
+	\small
+	\caption{Clases de redes definidas para el diseño de PCB.}
+	\label{tab:clases_redes}
+	\begin{tabular}{p{0.35\linewidth}*{3}{p{0.15\linewidth}}}
+		\toprule	
+		\textbf{Parámetro} & \textbf{Default} & \textbf{microSD} & \textbf{potencia} \\
+			\cmidrule{2-4}
+		 & \multicolumn{3}{c}{\textbf{Valor [\si{\milli\meter}]}} \\
+		\midrule
+		Margen & 0,2 & 0,15 & 0,7 \\
+		Ancho de pista & 0,2 & 0,2 & 0,5 \\
+		Diámetro Vía & 0,6 & 0,6 & 0,8 \\
+		Orificio de vía & 0,3 & 0,3 & 0,4 \\
+		Tamaño de uVía & 0,3 & 0,3 & 0,3 \\
+		Orificio de microvía & 0,1 & 0,1 & 0,1 \\
+		Ancho del par diferencial & 0,2 & 0,2 & 0,2 \\
+		Espaciado del par diferencial & 0,25 & 0,25 & 0,25 \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+
+
+
+% TODO: \usepackage{graphicx} required
+
+
+% TODO: \usepackage{graphicx} required
+

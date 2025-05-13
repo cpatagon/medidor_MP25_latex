@@ -1,0 +1,41 @@
+% Patron Obervar y reaccionar
+	
+
+\shorthandoff{>}
+\begin{tikzpicture}[
+node distance=0.5cm,
+every node/.style={
+	draw,
+	rounded corners,
+	minimum height=1cm,
+	minimum width=2.5cm,
+	align=center 
+},
+label/.style={    % Nuevo estilo para etiquetas
+	draw=none,    % Sin borde
+	minimum height=0cm,  % Sin altura mínima
+	minimum width=0cm   % Sin ancho mínimo
+}
+]
+% Definición de nodos
+\node (observer) {proceso\\ observador};
+\node[above=0.5cm of observer] (sensors) {sensores};
+\node[right=2cm of observer] (analysis) {proceso de\\ análisis};
+\node[right=2cm of analysis] (display) {proceso de\\ despliegue};
+\node[above=0.5cm of display] (screen) {pantalla};
+\node[below left=0.5cm and 0.5cm of analysis] (alarm) {proceso de\\ alarma};
+\node[below right=0.5cm and 1cm of analysis] (reactor) {proceso reactor};
+\node[below=of alarm] (alarmDevice) {alarma};
+\node[below=of reactor] (otherDevice) {otro equipo};
+
+% Conexiones
+\draw[-latex] (sensors) -- (observer);
+\draw[-latex] (observer) -- node[label, above] {valores de\\ sensor} (analysis);
+\draw[-latex] (analysis) -- node[label, above] {valores a\\ desplegar} (display);
+\draw[-latex] (display) -- (screen);
+\draw[-latex] (analysis) -- (alarm);
+\draw[-latex] (alarm) -- (alarmDevice);
+\draw[-latex] (analysis) -- (reactor);
+\draw[-latex] (reactor) -- (otherDevice);
+\end{tikzpicture}
+\shorthandon{>}

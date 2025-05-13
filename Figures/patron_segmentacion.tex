@@ -1,0 +1,15 @@
+	% patron de segmentacion
+		\shorthandoff{>}
+		\begin{tikzpicture}[node distance=5cm, every node/.style={draw, rounded corners, minimum height=1.5cm, minimum width=2.2cm, align=center}]
+			% Nodes
+			\node (producer) {proceso\\ productor};
+			\node[right of=producer] (buffer) {proceso\\ buffer};
+			\node[right of=buffer] (consumer) {proceso\\ consumidor};
+			\node[right=1cm of consumer, draw=none, minimum width=0.1cm] (ellipsis) {...};
+			
+			% Connections with labels outside of boxes
+			\path[-latex] (producer) edge node[above, draw=none] {datos\\ producidos} (buffer);
+			\path[-latex] (buffer) edge node[above, draw=none] {datos\\ consumidos} (consumer);
+			\path[-latex] (consumer) edge (ellipsis);
+		\end{tikzpicture}
+		\shorthandon{>}

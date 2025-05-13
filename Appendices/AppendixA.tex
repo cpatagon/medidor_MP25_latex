@@ -1,7 +1,146 @@
 % Appendix A
 
-\chapter{Appendix Title Here} % Main appendix title
+\chapter{Características adicionales del hardware} % Main appendix title
 
 \label{AppendixA} % For referencing this appendix elsewhere, use \ref{AppendixA}
 
-Write your Appendix content here.
+Este apéndice presenta las especificaciones técnicas detalladas de los componentes de hardware utilizados en el desarrollo del instrumento. Se incluyen las características eléctricas del sensor SPS30, las especificaciones de alimentación de la placa STM32F429ZI y su distribución de puertos. Adicionalmente, se detallan las características técnicas de los módulos complementarios: microSD para almacenamiento, ESP8266 para comunicación inalámbrica y DHT22 para medición de variables ambientales. Por último, se especifica la instrumentación utilizada durante el desarrollo y validación del sistema.
+
+%\section{Características adicionales sensor \MPF} % Main appendix title
+
+%\label{AppendixB} % For referencing this appendix elsewhere, use \ref{AppendixA}
+
+\begin{table}[tph]
+	\small
+	\centering
+	\caption{Características eléctricas del SPS30 \cite{Sensirion2023}.}
+	\label{tab:electrical_characteristics}
+	\input{tablas/sensorSPS30_caraelectricas.tex}
+\end{table}
+
+%\section{Características adicionales de la placa SMT32F429ZI}
+
+\begin{table}[h]
+	\small
+	\centering
+	\caption{Fuentes de alimentación externas del STM32F429ZI. %\citep{waveshare_nucleo_f429zi}.
+	}
+	\label{tab:external_power_sources}
+\input{tablas/F429ZI_Energia.tex}
+\end{table}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=1\linewidth]{Figures/placanucleoF429ZI}
+	\caption{Placa de desarrollo utilizada para el  trabajo, con sus principales puertos. %\citep{waveshare_nucleo_f429zi}.
+	}
+	\label{fig:placanucleof429zi}
+\end{figure}
+
+%\section{Módulo de comunicación DHT22}
+
+\begin{table}[h!]
+	\centering
+	
+	\caption{Especificaciones técnicas del sensor DHT22. %\citep{Aosong2023}.
+	}
+	\small
+	\input{tablas/sensorDHT22_caracteristicas.tex}
+	\label{tab:dht22_specs}
+\end{table}
+
+
+
+
+
+
+%\section{Módulo microSD}
+\begin{table}[h!]
+	\centering
+	\caption{Especificaciones del módulo microSD. %\cite{SDCard2020, FatFs2022}.
+	}
+	\small
+	\begin{tabular}{ll}
+		\toprule
+		\textbf{Parámetro} & \textbf{Especificación} \\
+		\midrule
+		Protocolo & SPI \\
+		Velocidad máxima & \SI{42}{\mega\hertz} \\
+		Tensión de operación & \SIrange{3.3}{5}{\volt} \\
+		Consumo en escritura & \SI{200}{\milli\ampere} \\
+		Sistema de archivos & FAT32 \\
+		Capacidad máxima & \SI{32}{\giga\byte} \\
+		\bottomrule
+	\end{tabular}
+	\label{tab:microsd_specs}
+\end{table}
+
+%\section{Módulo de comunicación ESP8266}
+
+\begin{table}[htbp]
+	\centering
+	\small
+	\caption{Características principales del módulo ESP8266. %\cite{Espressif2020}.
+	}
+	\label{table:esp8266_specs}
+	\input{tablas/esp8266_specs.tex}
+\end{table}
+
+
+
+\begin{table}[htbp]
+	\caption{Instrumentación y herramientas de prueba.}
+	\label{tab:pruebas}
+	\small
+	\centering
+	\begin{tabular}{lll}
+		\hline
+		\textbf{Instrumento} & \textbf{Modelo} & \textbf{Especificaciones} \\
+		\hline
+		Analizador lógico & - & \SI{24}{\mega\hertz}, 8 canales \\
+		Osciloscopio & FNIRSI1014D & \SI{100}{\mega\hertz} \\
+		Multímetro & TMT460012 & Digital \\
+		Fuente de poder & Jesverty SPS-3005 & \SIrange{0}{30}{\volt}, \SI{5}{\ampere} \\
+		Medidor MP & Grimm & Analizador óptico \\
+		Framework pruebas & Ceedling & Testing unitario en C \\
+		\hline
+	\end{tabular}
+\end{table}
+
+
+\begin{table}[!hbp]
+	\centering
+	\small
+	\caption{Especificaciones de los instrumentos empleados en el banco de pruebas.}
+	\label{tab:pruebas2}
+	\begin{tabular}{p{0.20\linewidth}p{0.18\linewidth}p{0.52\linewidth}}
+		\toprule
+		\textbf{Instrumento} & \textbf{Modelo} & \textbf{Función en la validación del sistema} \\
+		\bottomrule
+		Analizador lógico & USBee AX Pro (\SI{24}{\mega\hertz}, 8 canales) & Verificación de protocolos de comunicación (\IIC, SPI, UART) y análisis de sincronización entre componentes del sistema \\
+		
+		Osciloscopio digital & FNIRSI-1014D (\SI{100}{\mega\hertz}, \SI{1}{\giga\hertz} tasa de muestreo) & Caracterización de señales analógicas y digitales, medición de ruido, análisis de transitorios e integridad de señal \\
+		
+		Multímetro digital & TMT460012 (precisión: \SI{\pm0.5}{\percent}) & Medición de parámetros eléctricos (tensión, corriente, resistencia) y verificación de puntos de prueba \\
+		
+		Analizador de potencia USB & Aideepen UM34C & Monitorización en tiempo real de consumo energético (\SI{0}{\ampere}--\SI{3}{\ampere}, \SI{0}{\volt}--\SI{26}{\volt}) y eficiencia del sistema \\
+		
+		Fuente de alimentación & Jesverty SPS-3005 (\SIrange{0}{30}{\volt}, \SI{5}{\ampere}) & Suministro controlado y estabilizado de energía, simulación de condiciones de alimentación variables \\
+		
+		Monitor de referencia \MPF & Grimm 11-D & Validación metrológica de concentraciones de material particulado con precisión certificada (\SI{\pm2}{\percent}) \\
+		
+		Analizador por atenuación beta & Met One BAM-1022 & Sistema de referencia EPA-equivalente para calibración y verificación a largo plazo \\
+		
+		Software CAD electrónico & KiCad 6.0 & Verificación de reglas de diseño del PCB, análisis de integridad de señal y compatibilidad electromagnética \\
+		
+		Medidor LCR & FNIRSI LCR-P1 (\SIrange{100}{100000}{\hertz}) & Caracterización de componentes pasivos con precisión de \SI{0.3}{\percent} para validación de tolerancias \\
+		
+		Framework de pruebas & Ceedling 0.31.1 con Unity/CMock & Automatización de pruebas unitarias, generación de objetos simulados y cobertura de código para el firmware \\
+		
+		Terminal serial & Cutecom 0.51.0 & Monitorización de comunicaciones serie, verificación de protocolos y análisis de flujos de datos \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+
+

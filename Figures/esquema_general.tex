@@ -1,0 +1,158 @@
+%!TEX root = ../TI_Gomez_Luis.tex
+	\centering
+	\shorthandoff{<>} % Desactivar caracteres problemáticos
+%	\begin{tikzpicture}[ node distance=1.5cm]
+%	% Nodes
+%	\node (microcontroller) 
+%	[draw, rectangle, fill=blue!10!white, align=center] 						
+%	{\textbf{Microcontrolador}\\ \rotatebox{90}{\faMicrochip}};  
+%	
+%	\node (sensor1) 		
+%	[above right=of microcontroller, draw, rectangle, fill=red!10!white, align=center, yshift=0.2cm, xshift=0.3cm] 	
+%	{Sensor de\\MP2,5 \faSmog};
+%	
+%	\node (sensor2) 		
+%	[right=of microcontroller, draw, rectangle, fill=red!10!white, align=center] 		
+%	{Sensor de\\MP2,5 \faSmog};
+%	
+%	\node (sensor3) 		
+%	[below right=of microcontroller, draw, rectangle, fill=red!10!white, align=center, , yshift=-0.2cm, xshift=0.3cm] 	
+%	{Sensor de\\MP2,5 \faSmog};
+%	
+%	\node (storage) 		
+%	[below=of microcontroller, draw, fill=yellow!10!white, rectangle, align=center] 		
+%	{Sistema de \\ almacenamiento  \faSdCard }; % \faDatabase
+%	
+%	\node (transmission) 	
+%	[above=of microcontroller, draw, rectangle, align=center] 		
+%	{Sistema de transmi-\\sión de datos  \faSignal};
+%	
+%	\node (rtc) 			
+%	[above left=of microcontroller, draw, rectangle, align=center, yshift=-1.5cm, xshift=-.33cm]  
+%	{RTC \faClock[regular]};
+%	
+%	\node (power) 			
+%	[below left=of microcontroller, draw, rectangle, align=center,yshift=-0.2cm, xshift=0.0cm] 	
+%	{Fuente de\\poder \faBatteryQuarter};
+%	
+%	\node (cabinet) 		[above right=of transmission,  xshift=-6.8cm,yshift=-0.7cm]     {\textbf{Gabinete} \faCloudSunRain};
+%	
+%	% Bounding Box
+%	\begin{scope}[on background layer]
+%	\node[fill=gray!10,  draw, rectangle, rounded corners, fit=(cabinet) (sensor2) (rtc) (storage) (transmission)] {};
+%	\end{scope}
+%	
+%	% Arrows
+%	\draw[<->] (microcontroller) -- (sensor1);
+%	\draw[<->] (microcontroller) -- (sensor2);
+%	\draw[<->] (microcontroller) -- (sensor3);
+%	\draw[<->] (microcontroller) -- (storage);
+%	\draw[<->] (microcontroller) -- (transmission);
+%	\draw[->] (rtc) -- (microcontroller);
+%	\draw[->] (power) -- (microcontroller);
+%	\end{tikzpicture}
+	 % Reactivar caracteres problemáticos
+
+	
+	\begin{tikzpicture}[
+	node distance=2.5cm,
+	box/.style={
+		draw,
+		rectangle,
+		minimum width=2.5cm,
+		minimum height=1.2cm,
+		align=center,
+		rounded corners=2pt,
+		fill=white,
+		font=\small
+	},
+	subsystem/.style={
+		draw,
+		thick,
+		rounded corners=4pt,
+		fill=gray!10,
+		inner sep=0.5cm,
+		inner ysep=0.8cm,
+		minimum width=3cm
+	},
+	label/.style={
+		font=\bfseries,
+		text=black,
+		anchor=south,
+		align=center
+	}
+	]
+	
+	% Sistema de Adquisición de Datos
+	\begin{scope}[local bounding box=sensors]
+	\coordinate (sensor_origin) at (0.2,2.7);
+	\node[subsystem, minimum width=3cm, minimum height=8cm] (sensor_group) at (sensor_origin) {};
+	\node[label] at ($(sensor_group.north)+(0,-1.3)$) {sistema de\\ adquisición};
+	
+	% Componentes del subsistema de adquisición
+	\node[box, minimum width=2cm] (s1) at ($(sensor_origin)+(0,2.1)$) {sensor \#1 \\  \MPF \faSmog};
+	\node[box, minimum width=2cm] (s2) at ($(sensor_origin)+(0,0.8)$) {sensor \#2 \\  \MPF \faSmog};
+	\node[box, minimum width=2cm] (s3) at ($(sensor_origin)+(0,-0.5)$) {sensor \#3 \\  \MPF \faSmog};
+	\node[box, minimum width=2cm] (dht) at ($(sensor_origin)+(0,-1.8)$) {DHT22\\ \faThermometerHalf };
+	\node[box, minimum width=2cm] (rtc) at ($(sensor_origin)+(0,-3.3)$) {RTC  \faClock[regular]\\ DS3231};
+	\end{scope}
+	
+	% Unidad de Procesamiento
+	\begin{scope}[local bounding box=processing]
+	\coordinate (proc_origin) at (4.5,4);
+	\node[subsystem, minimum width=5cm, minimum height=4.7cm] (proc_group) at (proc_origin) {};
+	\node[label] at ($(proc_group.north)+(0,-1.1)$) {unidad de\\ procesamiento};
+	
+	\node[box, minimum width=3.5cm, minimum height=2.5cm] (mcu) at ($(sensor_origin)+(4.3,0.7)$) {microcontrolador\\STM32F429\\\rotatebox{90}{\faMicrochip}};
+	\end{scope}
+	
+	% Sistema de Almacenamiento y Comunicación
+	\begin{scope}[local bounding box=storage]
+	\coordinate (storage_origin) at (9,4);
+	\node[subsystem, minimum width=3.5cm, minimum height=4.7cm] (storage_group) at (storage_origin) {};
+	\node[label] at ($(storage_group.north)+(0,-1.2)$) {almacenamiento\\ y comunicación};
+	
+	\node[box] (sd) at ($(storage_origin)+(0,0.5)$) {microSD\\ \faSdCard };
+	\node[box] (wifi) at ($(storage_origin)+(0,-1.2)$) {módulo Wi-Fi\\ \faSignal};
+	\end{scope}
+	
+	% Sistema de Alimentación
+	\begin{scope}[local bounding box=power]
+	\coordinate (power_origin) at (4.5,0);
+	\node[subsystem, minimum width=5cm, minimum height=2.5cm] (power_group) at (power_origin) {};
+	\node[label] at ($(power_group.north)+(0,-2.5)$) {sistema de alimentación};
+	
+	\node[box,  minimum width=1.8cm, minimum height=1cm] (ps) at ($(power_origin)+(-1,0)$) {Fuente\\ Principal\\ \faChargingStation};
+	\node[box,  minimum width=1.8cm, minimum height=1cm] (bat) at ($(power_origin)+(1,0)$) {batería\\ backup\\ \faBatteryQuarter};
+	\end{scope}
+	
+	% Sistema de Control y Monitoreo
+	\begin{scope}[local bounding box=monitoring]
+	\coordinate (monitor_origin) at (9,0);
+	\node[subsystem, minimum width=3.5cm, minimum height=2.5cm] (monitor_group) at (monitor_origin) {};
+	\node[label] at ($(monitor_group.north)+(0,-2.4)$) {control y\\ monitoreo};
+	
+	\node[box, minimum width=2cm] (led) at ($(monitor_group.north)+(0,-0.8)$){\faLightbulb[regular] LED\\ estado};
+	\end{scope}
+	
+	% Conexiones entre los componentes
+	\foreach \i in {s1,s2,s3,dht,rtc}
+	\draw[->, thick] (\i) -- (mcu);
+	
+	\draw[<->, thick] (mcu) -- (sd);
+	\draw[<->, thick] (mcu) -- (wifi);
+	\draw[->, thick] (ps) -- (mcu);
+	\draw[->, thick, dashed] (bat) -- (mcu);
+	\draw[->, thick] (mcu) -- (led);
+	
+	% Gabinete exterior (envolviendo todos los subsistemas)
+	\begin{scope}[on background layer]
+	\node[draw, thick, rounded corners=6pt, fill=gray!5, 
+	fit=(sensors) (processing) (storage) (power) (monitoring),
+	inner sep=0.5cm] (cabinet) {};
+	\end{scope}
+	
+	% Título del gabinete exterior
+	\node[label] at ($(cabinet.north)+(-0.5,-.8)$) {Gabinete IP65  \faCloudSunRain};
+	\end{tikzpicture}
+	\shorthandon{<>}
